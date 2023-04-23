@@ -1,0 +1,171 @@
+{% load humanize %}
+{% load static about_tags %}
+
+
+{% get_promo %}
+
+
+{#begin HAPPY CLIENTS#}
+{% comment %}
+    <section class="ftco-section testimony-section bg-primary">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+          	<span class="subheading">Testimonial</span>
+            <h2 class="mb-4">Happy Clients</h2>
+          </div>
+        </div>
+        <div class="row ftco-animate">
+          <div class="col-md-12">
+            <div class="carousel-testimony owl-carousel ftco-owl">
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></span></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endcomment %}
+{#end HAPPY CLIENTS#}
+
+{# begin RECENT POSTS #}
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+             <span class="subheading"> <a href="{% url 'post_list' %}">Наш блог</a></span>
+            <h2>Недавние записи</h2>
+          </div>
+        </div>
+        <div class="row d-flex">
+{#            {% three_last_posts as  last_posts %}#}
+            {% for post in free_latest_posts %}
+                {% with post.get_absolute_url as post_url %}
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="blog-entry align-self-stretch" style="width: 100%;">
+                            <a href="{{ post_url }}" class="block-20 rounded" style="background-image: url('{{ post.main_image.url }}');">
+                            </a>
+                            <div class="text mt-3 text-center">
+              	                <div class="meta mb-2">
+                                     <h3 class="heading" style="margin-bottom: 8px"><a href="{{ post_url }}">{{ post.title}}</a></h3>
+                                        <h6 style="margin-bottom: 0"><a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a></h6>
+                                    <div>{{ post.pub_at|naturaltime }}</div>
+                                    <div>{{ post.author }}</div>
+                                    {% if post.get_comments|length %}<div><span class="icon-chat"></span> {{ post.get_comments|length }}</div>{% endif %}
+                                    {% if post.views_count %}<div><span class="icon-eye"></span> {{ post.views_count }}</div>{% endif %}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                {% endwith %}
+            {% endfor %}
+
+        </div>
+      </div>
+    </section>
+{# end RECENT POSTS #}
+
+{#begin SIBSCRIBE TO#}
+{% comment %}
+    <section class="ftco-section ftco-no-pb ftco-no-pt mb-5">
+      <div class="container">
+      	<div class="row">
+	      	<div class="col-md-12">
+	      		<div class="bg-primary w-100 rounded px-md-0 px-4">
+			        <div class="row d-flex justify-content-center">
+			        	<div class="col-lg-8 py-4">
+			        		<div class="row">
+					          <div class="col-md-6 d-flex align-items-center">
+					            <h2 class="mb-0" style="color:white; font-size: 24px;">Subcribe to our Newsletter</h2>
+					          </div>
+					          <div class="col-md-6 d-flex align-items-center">
+					            <form action="#" class="subscribe-form">
+					              <div class="form-group d-flex">
+					                <input type="text" class="form-control" placeholder="Enter email address">
+					                <input type="submit" value="Subscribe" class="submit px-3">
+					              </div>
+					            </form>
+					          </div>
+				          </div>
+			          </div>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
+      </div>
+    </section>
+   {% endcomment %}
+{#end SIBSCRIBE TO#}

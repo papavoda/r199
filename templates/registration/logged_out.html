@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include 'hero_over_home.html' %}
+<p>Logged out!</p>
+
+<a href="{% url 'login'%}">Click here to login again.</a>
+{% endblock %}

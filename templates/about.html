@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load about_tags cache%}
+{% load static%}
+{% block title %}{{ request.site.name }} - {{ main_title }}{% endblock title %}
+{% block content %}
+{#{% cache 5000 about %}#}
+{% include 'hero_over_home.html' %}
+
+{% get_promo %}
+
+
+<section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center">
+					<div class="col-md-12">
+						<div class="wrapper">
+							<div class="row no-gutters mb-5">
+								<div class="col-md-7">
+                                    {% if messageSent %}
+                                        <div id="form-message-success" class="mb-4">
+					                        <h5>Ваше сообщение отправлено. Cпасибо, {{ sender }}!</h5>
+					      		        </div>
+                                    {% else %}
+									<div class="contact-wrap w-100 p-md-5 p-4">
+										<h3 class="mb-4">Задать вопрос:</h3>
+										<div id="form-message-warning" class="mb-4"></div>
+
+                                        <form action="{% url 'contact_us' %}" method="post" class="contact-form">
+                                            <div class="row">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                                <div class="col-md-12">
+                                                    <div class="input-list">
+                                                        <input type="submit" value="Отправить" class="btn btn-primary">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         </form>
+									</div>
+                                    {% endif %}
+								</div>
+								<div class="col-md-5 d-flex align-items-stretch">
+									<div id="map">
+				          </div>
+								</div>
+							</div>
+							<div class="row">
+                                {% for contact in contacts %}
+								<div class="col-md-3">
+									<div class="dbox w-100 text-center">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa {{ contact.font_awesome_icon }}"></span>
+				        		</div>
+				        		<div class="text">
+
+					            <p><a href="{% cycle  'tel://' 'mailto:' %}{{ contact.value }}">{{ contact.value }}</a></p>
+
+					          </div>
+				          </div>
+								</div>
+
+                                {% endfor %}
+{#                                <a href="tel://1234567920"></a>#}
+{#                                <a href="mailto:info@yoursite.com">info@yoursite.com</a>#}
+
+							</div>
+						</div>
+					</div>
+				</div>
+    	</div>
+    </section>
+
+{#{% endcache %}#}
+{% endblock %}

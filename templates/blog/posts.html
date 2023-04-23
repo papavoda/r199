@@ -1,0 +1,34 @@
+
+   <section class="ftco-section">
+      <div class="container">
+        <div class="row d-flex">
+            {% for post in posts %}
+                {% with post.get_absolute_url as post_url %}
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="blog-entry align-self-stretch" style="width: 100%;">
+                            <a href="{{ post_url }}" class="block-20 rounded" style="background-image: url('{{ post.main_image.url }}');">
+                            </a>
+                            <div class="text mt-3 text-center">
+              	                <div class="meta mb-2">
+                                     <h3 class="heading" style="margin-bottom: 8px"><a href="{{ post_url }}">{{ post.title}}</a></h3>
+                                    {% if nbar != 'favorites' %}
+                                        <h6 style="margin-bottom: 0"><a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a></h6>
+                                    {% endif %}
+                                    <div>{{ post.pub_at|date:"d.m.Y" }}</div>
+                                    <div>{{ post.author }}</div>
+                                    {% if post.get_comments|length %}<div><span class="icon-chat"></span>{{ post.get_comments|length }}</div>{% endif %}
+                                    {% if post.views_count %}<div><span class="icon-eye"></span> {{ post.views_count }}</div>{% endif %}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                {% endwith %}
+            {% empty  %}
+                <p>Извините! Ничего не нашли...</p>
+            {% endfor %}
+
+        </div>
+
+{% include 'paginator.html' %}
+      </div>
+    </section>

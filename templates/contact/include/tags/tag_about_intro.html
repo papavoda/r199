@@ -1,0 +1,138 @@
+{% load static %}
+{% comment %}
+все переменные загружаютися из 'about_tags.py'
+@register.inclusion_tag('contact/include/tags/tag_about_intro.html')
+{% endcomment %}
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+    	<div class="container">
+    		<div class="row d-flex no-gutters">
+    			<div class="col-md-6 d-flex">
+    				<div class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-end"
+                         style="background-image:url({{ intro_about.main_image.url }});">
+
+    				</div>
+    			</div>
+    			<div class="col-md-6 pl-md-5">
+    				<div class="row justify-content-start py-5">
+		          <div class="col-md-12 heading-section ftco-animate pl-md-4 py-md-4">
+
+		          	<span class="subheading">{{ intro_about.name }}</span>
+		            <h2 class="mb-4"><a href="tel://{{ intro_about.slogan }}">{{ intro_about.slogan }}</a></h2>
+		            <p>{{ intro_about.text|safe }}</p>
+		            <div class="tabulation-2 mt-4">
+
+
+									<ul class="nav nav-pills nav-fill d-md-flex d-block">
+                                    {% for t in promo %}
+                                        {% if forloop.first %}
+									  <li class="nav-item mb-md-0 mb-2">
+									    <a class="nav-link active py-2" data-toggle="tab" href="#home1">{{ t.title }}</a>
+									  </li>
+                                        {% else %}
+  									  <li class="nav-item {% cycle  'px-lg-2 mb-md-0 mb-2' ''%}">
+									    <a class="nav-link py-2 {% cycle '' 'mb-md-0 mb-2' %}" data-toggle="tab" href="{% cycle '#home2' '#home3'%}">{{ t.title }}</a>
+									  </li>
+                                        {% endif %}
+                                        {% empty %}
+                                            <li>Sorry!!!</li>
+                                    {% endfor %}
+
+									</ul>
+
+									<div class="tab-content bg-light rounded mt-2">
+                                    {% for t in promo %}
+                                        {% if forloop.first %}
+									  <div class="tab-pane container p-0 active" id="home1">
+									  	<p>{{t.text|safe}}</p>
+									  </div>
+                                        {% else %}
+ 									  <div class="tab-pane container p-0 fade" id="{%cycle 'home2' 'home3'%}">
+                                      <p>{{t.text|safe}}</p>
+									  </div>
+                                        {% endif %}
+                                    {% endfor %}
+									</div>
+								</div>
+		          </div>
+		        </div>
+	        </div>
+        </div>
+    	</div>
+    </section>
+{#START PROJECTS COUNTER#}
+    <section class="ftco-counter" id="section-counter">
+    	<div class="container">
+				<div class="row">
+          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18 d-flex">
+
+              <div class="text d-flex align-items-center">
+                <strong class="number" data-number="26">0</strong>
+              </div>
+              <div class="text-2">
+              	<span>лет <br>успешной<br> работы</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18 d-flex">
+              <div class="text d-flex align-items-center">
+                <strong class="number" data-number="447">0</strong>
+              </div>
+              <div class="text-2">
+              	<span>проектов<br>выполнено</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18 d-flex">
+              <div class="text d-flex align-items-center">
+                <strong class="number" data-number="486">0</strong>
+              </div>
+              <div class="text-2">
+              	<span>довольных<br>клиентов</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18 d-flex">
+              <div class="text d-flex align-items-center">
+                <strong class="number" data-number="10130">0</strong>
+              </div>
+              <div class="text-2">
+              	<span>кв. метров<br>уюта</span>
+              </div>
+            </div>
+          </div>
+        </div>
+    	</div>
+    </section>
+
+{#END PROJECT COUNTER#}
+
+
+{#    START about images#}
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+		  <div class="container-fluid px-md-0">
+        <div class="row no-gutters">
+            {% for img in img_about %}
+          <div class="col-md-4 ftco-animate">
+            <div class="work img d-flex align-items-end" style="background-image: url({{img.image.url}});">
+            	<a href="{{img.image.url}}" alt="{{ img.alt }}" class="icon image-popup d-flex justify-content-center align-items-center">
+	    					<span class="icon-expand"></span>
+	    				</a>
+            	<div class="desc w-100 px-4">
+	              <div class="text w-100 mb-3">
+{#	              	<span>{{img.alt}}</span>#}
+	              	<h2>{{img.alt}}</h2>
+	              </div>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+
+        </div>
+      </div>
+		</section>
+{#END about images#}

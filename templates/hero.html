@@ -1,0 +1,69 @@
+{% load static %}
+{#model HomeHeroSlogans#}
+
+<div class="hero-wrap">
+	    <div class="home-slider owl-carousel">
+
+            {% for h in hero_one %}
+                {% if h.hero_section == 1 %}
+	      <div class="slider-item" style="background-image:url({{ h.title_image.url }});">
+	      	<div class="overlay"></div>
+	        <div class="container">
+	          <div class="row no-gutters slider-text align-items-center justify-content-center">
+		          <div class="col-md-12 ftco-animate">
+		          	<div class="text w-100 text-center">
+		          		<h2>{{ h.small_title}}</h2>
+			            <h1 class="mb-3">{{ h.title }}</h1>
+		            </div>
+		          </div>
+		        </div>
+	        </div>
+	      </div>
+                {% endif %}
+            {% endfor %}
+
+	    </div>
+	  </div>
+
+<section class="ftco-section ftco-no-pt ftco-no-pb">
+    	<div class="container">
+{#            begin CONSTR RENOV#}
+    		<div class="row">
+                {% for h in hero_one %}
+                    {% if h.hero_section == 2 %}
+          <div class="col-md-3 d-flex services align-self-stretch p-4 py-md-5 ftco-animate">
+            <div class="media block-6 d-block text-center pt-md-4">
+              <div class="icon d-flex justify-content-center align-items-center">
+            		<span class="flaticon-{% cycle 'hook' 'skyline' 'stairs' 'home'%}"></span>
+              </div>
+              <div class="media-body p-2 mt-3">
+                <h3 class="heading">{{ h.title }}</h3>
+                <p>{{ h.text }}</p>
+              </div>
+            </div>
+          </div>
+                    {% endif %}
+                {% endfor %}
+        </div>
+{#            end CONSTR RENOV#}
+{#            begin EXPERTS#}
+    		<div class="row no-gutters">
+                {% for h in hero_one %}
+                    {% if h.hero_section == 3 %}
+    			<div class="col-md-12 col-lg-4 services-2 p-4 py-5 d-flex ftco-animate">
+    				<div class="py-3 d-flex">
+	    				<div class="icon">
+	    					<span class="flaticon-{% cycle 'engineer' 'engineer-1' 'engineer-2'%}"></span>
+	    				</div>
+	    				<div class="text">
+	      				<h3>{{ h.title }}</h3>
+	      				<p class="mb-0">{{ h.text }}</p>
+	    				</div>
+	    			</div>
+    			</div>
+                    {% endif %}
+                {% endfor %}
+    		</div>
+{#end experts#}
+    	</div>
+    </section>

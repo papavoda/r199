@@ -1,0 +1,88 @@
+{% load cache %}
+
+
+<footer class="footer">
+			<div class="container-fluid px-lg-5">
+				<div class="row">
+
+                {% cache 5000 footer %}
+					<div class="col-md-9 py-5">
+						<div class="row">
+							<div class="col-md-4 mb-md-0 mb-4">
+								<h2 class="footer-heading">_____</h2>
+								<p>Вся информация, представленная на сайте,
+                                    носит исключительно информационный характер
+                                    и ни при каких условиях не является публичной офертой.</p>
+								<ul class="ftco-footer-social p-0">
+
+                                    {% for soc in social %}
+		              <li class="ftco-animate"><a href="{{ soc.link }}" data-toggle="tooltip" data-placement="top" title="{{ soc.name }}"><span class="ion-logo-{{ soc.font_awesome_code }}"></span></a></li>
+		                            {% endfor %}
+                                </ul>
+							</div>
+							<div class="col-md-8">
+								<div class="row justify-content-center">
+									<div class="col-md-12 col-lg-10">
+										<div class="row">
+											<div class="col-md-4 mb-md-0 mb-4">
+												<h2 class="footer-heading"><a class="footer-heading" href="{% url 'category_list' %}" class="nav-link">Категории</a></h2>
+                                                <ul class="list-unstyled">
+                                                    {% for cat in categories %}
+                                                    <li><a href="{{cat.get_absolute_url}}" class="py-1 d-block">{{ cat.name }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+											</div>
+											<div class="col-md-4 mb-md-0 mb-4">
+												<h2 class="footer-heading">Меню</h2>
+												<ul class="list-unstyled">
+						              <li><a href="{% url 'home' %}" class="py-1 d-block">Главная</a></li>
+						              <li><a href="{% url 'about' %}" class="py-1 d-block">О нас</a></li>
+						              <li><a href="{% url 'favorites_list' %}" class="py-1 d-block">Наши работы</a></li>
+						              <li><a href="{% url 'price' %}" class="py-1 d-block">Цены</a></li>
+						              <li><a href="{% url 'post_list' %}" class="py-1 d-block">Блог</a></li>
+						              <li><a href="{% url 'calc' %}" class="py-1 d-block">Калькулятор</a></li>
+						            </ul>
+											</div>
+											<div class="col-md-4 mb-md-0 mb-4">
+												<h2 class="footer-heading">Метки</h2>
+												<ul class="list-unstyled">
+{#                                                    {% tag_list as tags %}#}
+                                                    {% for tag in tags %}
+                                                   <li> <a href="{{ tag.get_absolute_url }}" class="py-1 d-block">{{ tag.name }}</a></li>
+                                            {% endfor %}
+						                    </ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-md-5">
+							<div class="col-md-12">
+								<div class="copyright">
+                                    <p><a href="{% url 'home' %}">&copy;<script>document.write(new Date().getFullYear());</script> remont199.com</a></p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ion-ios-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+					  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </div>
+							</div>
+						</div>
+					</div>
+                {% endcache %}
+
+					<div class="col-md-3 py-md-5 py-4 aside-stretch-right pl-lg-5">
+                          <ul>
+                           {% if user.is_authenticated %}
+                             <li>User: {{ user.get_username }}</li>
+                             <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                             <li><a href="{% url 'post_create'%}">Add post</a></li>
+                           {% else %}
+                             <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+                           {% endif %}
+                          </ul>
+					</div>
+
+
+				</div>
+			</div>
+		</footer>

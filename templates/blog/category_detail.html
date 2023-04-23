@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}{{ request.site.name }} - Категория - {{ category.name }}{% endblock %}
+{% block content %}
+   {% include 'hero_over_home.html'  with main_title=category.name %}
+    {% include 'blog/posts.html'%}
+{% endblock %}

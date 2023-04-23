@@ -1,0 +1,17 @@
+{% load mptt_tags blog_tags %}
+
+{#    {% get_cats as categories %}#}
+    {% recursetree cats %}
+{#        {% if node.post.exists %}#}
+        <li>
+
+             <a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
+
+            {% if not node.is_leaf_node and  node.is_leaf_node.post.all.count %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+{#        {% endif %}#}
+    {% endrecursetree %}

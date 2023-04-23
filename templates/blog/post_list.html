@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{#{% load  menu_tags %}#}
+{% block title %}{{ request.site.name }} - {{ main_title }}{% endblock %}
+{% block content %}
+{% include 'hero_over_home.html' %}
+    {%with post_list as posts %}
+{% include 'blog/posts.html' %}
+    {% endwith %}
+{% endblock %}

@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+
+    <title>{% block title %}Category list{% endblock %}</title>
+
+
+{% block content %}
+    <h1>Категории: {{ num_cat }}</h1>
+
+             <div class="categories">
+                <h3>Категории</h3>
+                  <ul>
+                      {% for cats in categories %}
+                        <li><a href="{{cats.get_absolute_url}}">{{ cats.name}}<span class="ion-ios-arrow-forward"></span></a></li>
+                      {% endfor %}
+                      </ul>
+
+              </div>
+
+
+{% endblock %}

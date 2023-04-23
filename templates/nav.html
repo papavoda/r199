@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="fa fa-bars"></span> Меню
+	      </button>
+            <form action="{% url 'search_result' %}" class="searchform order-lg-last">
+          <div class="form-group d-flex">
+            <input type="text" class="form-control pl-3" name='q' placeholder="Поиск">
+            <button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
+          </div>
+        </form>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if nbar == 'home' %}active{% endif %}"><a href="{% url 'home' %}" class="nav-link">ГЛАВНАЯ</a></li>
+                <li class="nav-item {% if nbar == 'about' %}active{% endif %}"><a href="{% url 'about' %}" class="nav-link">О НАС</a></li>
+                <li class="nav-item"><a href="{% url 'favorites_list' %}" class="nav-link">РАБОТЫ</a></li>
+                <li class="nav-item"><a href="{% url 'price' %}" class="nav-link">ЦЕНЫ</a></li>
+                <li class="nav-item {% if nbar == 'blog' %}active{% endif %}"><a href="{% url 'post_list' %}" class="nav-link">БЛОГ</a></li>
+	            <li class="nav-item {% if nbar == 'calc' %}active{% endif %}"><a href="{% url 'calc' %}" class="nav-link">КАЛЬКУЛЯТОР</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>

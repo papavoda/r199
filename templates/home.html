@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load about_tags cache%}
+{% cache 5000 home %}
+{% block title %}{{ request.site.name }} - {{ title }}{% endblock title %}
+{% block content %}
+    {#   HERO#}
+{% include 'hero.html' %}
+{#    end HERO#}
+
+    {# BEGIN ALL BASE TMP#}
+{% include 'all_base_tmp.html' %}
+{#    END ALL BASE TMP#}
+{% endblock %}
+{% endcache %}
