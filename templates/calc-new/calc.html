@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ request.site.name }} - {{ main_title }}{% endblock %}
+{% block add_to_head %}
+<link rel="stylesheet" href="{% static 'calc/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'hero_over_home.html' %}
+    {% include 'calc-new/calc-old.html' %}
+
+{% endblock %}

@@ -1,0 +1,386 @@
+
+
+
+
+
+
+
+<section class="ftco-section">
+      <div class="container">
+          <div class="row d-flex">
+            <div class="col-md-8 ftco-animate">
+                <h5>Пожалуйста, измерьте длину и ширину помещения, а также ширину и высоту окон и дверей.</h5>
+            </div>
+          </div>
+{#  begin        row with sizes#}
+            <div class="row d-flex">
+
+    <!-- *********************** -->
+    <!--   Выбор типа помещения  -->
+    <!-- *********************** -->
+                <div class="col-md-4 ftco-animate">
+        <h3>1. Тип помещения:</h3>
+        <div class="input-group mb-3">
+        <select onchange="moneyCalc.roomScan()" id="roomType" style="max-width: 100%">
+            <option value="0">Выберите</option>
+            <option value="1">Простое (например
+                прямоугольная комната)</option>
+           <option value="2">Сложное (эркер, коридор
+               неправильной формы итп)</option>
+        </select>
+        </div>
+        <div id="simple" class="numwidth">
+         <p>Длина (м)<input type='number' onchange="moneyCalc.roomScan()" maxlength="5" id="length" value="5.2"></p>
+         <p>Ширина (м)<input type='number' onchange="moneyCalc.roomScan()" maxlength="5" id="width" value="3.4"></p>
+        </div>
+        <div id="complicated" class="numwidth">
+          <p>Периметр (м)<input type='number' onchange="moneyCalc.roomScan()" maxlength="5" id="perimetr" value="7.3"></p>
+        </div>
+  <p class="numwidth">Высота (м)<input type='number' data-inputmask-alias='decimal' class="form-control" maxlength="4" onchange="moneyCalc.roomScan()" id="height" value="2.60"></p>
+  <p class="numwidth">Площадь помещения (м2): <input type='text' data-inputmask-alias='decimal' class="input-small" maxlength="5" size="5" onchange="moneyCalc.ceilingManual()" id="sq_ceiling"
+   title="Если известен только периметр помещения, введите площадь вручную"></input></p>
+  <p>Площадь стен (м2): <span id="sq_walls">0</span></p>
+ </div>
+    <!-- *********************** -->
+    <!--      Окна и двери       -->
+    <!-- *********************** -->
+                <div  class="col-md-4 ftco-animate" title="Площадь окна и двери будет вычтена из площади стен">
+        <h3>2. Окна</h3>
+        <p class="numwidth">Высота (м)<input  class="input-small" type='text' data-inputmask-alias='decimal' maxlength="4" onchange="moneyCalc.roomScan()" id="wHeight" value="1.45"></p>
+        <p class="numwidth">Ширина (м)<input type='text' data-inputmask-alias='decimal' class="input-small" maxlength="4" onchange="moneyCalc.roomScan()" id="wWidth" value="1.55"></p>
+        <p class="numwidth">Количество(шт.) <input class="input-mini" type="number" maxlength="1" onchange="moneyCalc.roomScan()" id="wSum" value="1"></p>
+    </div>
+
+                <div class="col-md-4  ftco-animate">
+        <h3>3. Двери</h3>
+        <p class="numwidth">Высота (м)<input class="input-small" type='text' data-inputmask-alias='decimal' maxlength="4"  onchange="moneyCalc.roomScan()" id="dHeight" value="2"></p>
+        <p class="numwidth">Ширина (м)<input class="input-small" type='text' data-inputmask-alias='decimal' maxlength="4" onchange="moneyCalc.roomScan()" id="dWidth" value="0.8"></p>
+        <p class="numwidth">Количество (шт.)<input class="input-mini" type="number" maxlength="1" onchange="moneyCalc.roomScan()" id="dSum" value="1"> шт</p>
+    </div>
+            </div>
+
+{#  end        row with sizes#}
+<hr>
+            <div class="row d-flex">
+<!-- ////////////////////////////////// -->
+<!-- ************* CEILING ************ -->
+<!-- ////////////////////////////////// -->
+                <div class="col-md-4 ftco-animate">
+                    <h3>4. Потолок</h3>
+                        <label title="Удаление побелки, краски, обработка бетоконтактом итп">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" id="isRemoveWhitewash"/>
+                                    </div>
+                                </div>
+                                <div class="form-control" aria-label="">Подготовка поверхности <p class="dscr">Удаление побелки, краски, обработка бетоконтактом итп</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label title="Штукатурка потолка при толщине слоя до 3-х см. Выберите примерную толщину слоя (см).">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" id="needCeilingPlaster"/>
+                                    </div>
+                                </div>
+                                <div class="form-control" aria-label="">Штукатурка<p class="dscr">Выберите примерную толщину слоя (см)</p></div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <input class="form-control" type="number" min="1" max="3" size="2" id="ceilingPlasterThick" value="1">
+                                    </span>
+                                </div>
+                            </div>
+                        </label>
+
+
+                        <label title="Монтаж потолка из гипсокартона в одной плоскости в один слой">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" id="needCeilingGKL"/>
+                                    </div>
+                                </div>
+                                <div class="form-control" aria-label="">Гипсокартон
+                                </div>
+                            </div>
+                        </label>
+
+
+  <label title="Шпаклевка потолка под покраску">
+  <div class="input-group mb-3">
+   <div class="input-group-prepend">
+     <div class="input-group-text">
+       <input type="checkbox" id="needCeilingPutty"/>
+     </div>
+   </div>
+    <div class="form-control" aria-label="">Шпаклевка
+    </div>
+  </div>
+ </label>
+
+  <label title="Шпаклевка потолка под покраску">
+  <div class="input-group mb-3">
+   <div class="input-group-prepend">
+     <div class="input-group-text">
+       <input type="checkbox" id="needGaltel"/>
+     </div>
+   </div>
+    <div class="form-control" aria-label="">Потолочный плинтус (галтель)
+    </div>
+  </div>
+ </label>
+
+       <h6>Финишная отделка потолка:</h6>
+       <div class="input-group mb-3">
+        <select id="ceilingFinish">
+            <option value="0">Выберите</option>
+            <option value="1">Покраска</option>
+        </select>
+        </div>
+</div>
+
+<!-- ////////////////////////////////// -->
+<!-- *************** WALLS ************ -->
+<!-- ////////////////////////////////// -->
+                <div class="col-md-4 ftco-animate">
+    <h3>5. Стены</h3>
+
+    <label title="Удаление обоев">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id="isRemoveWallpaper"/>
+                </div>
+            </div>
+                <div class="form-control" aria-label="Подготовка поверхности">Удаление обоев
+            </div>
+        </div>
+    </label>
+
+    <label title="Штукатурка стен при толщине слоя до 7-х см. Выберите примерную толщину слоя (см).">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id="needWallPlaster"/>
+                </div>
+            </div>
+            <div class="form-control" aria-label="">Штукатурка
+                <p class="dscr">Выберите примерную толщину слоя (см)
+                </p>
+            </div>
+            <div class="input-group-append">
+                <span class="input-group-text">
+                    <input class="form-control" type="number" min="1" max="7" size="2" id="wallPlasterThick" value="1" oninput="maxLengthCheck(this)">
+                </span>
+            </div>
+        </div>
+    </label>
+
+    <label title="Шпаклевка">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id="needWallPutty"/>
+                </div>
+            </div>
+                <div class="form-control" aria-label="Шпаклевка">Шпаклевка
+            </div>
+        </div>
+    </label>
+
+    <h6>Финишная отделка стен:</h6>
+    <div class="input-group mb-3">
+        <select id="wallFinish">
+            <option value="0">Выберите</option>
+            <option value="1">Обои</option>
+            <option value="2">Покраска</option>
+            <option value="3">Декоративная штукатурка (краска)</option>
+        </select>
+    </div>
+</div>
+
+<!-- ////////////////////////////////// -->
+<!-- ************* FLOOR ************** -->
+<!-- ////////////////////////////////// -->
+                <div class="col-md-4  ftco-animate">
+<h3>6. Пол</h3>
+    <label title="Удаление старого покрытия пола">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id="isRemoveOldFloor"/>
+                </div>
+            </div>
+                <div class="form-control" aria-label="Подготовка поверхности">Удаление старого покрытия
+            </div>
+        </div>
+    </label>
+    <label title="Выравнивание пола">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id="make_floor"/>
+                </div>
+            </div>
+                <div class="form-control" aria-label="Выравнивание пола">Выравнивание пола
+            </div>
+        </div>
+    </label>
+
+<!-- Выравнивание пола -->
+<div id='make_floor_div'>
+<form title="Выравнивание пола цементно-песчаным раствором или составом &laquo;Наливной пол&raquo; ,
+ или выполненное из гипсоволокнистых влагостойких КНАУФ-суперлистов (ГВЛВ), для создания «сухой» стяжки — сборного основания пола.">
+  <p> <input name="level" type="radio" onchange="levelin_change()" id="needLeveling" />Стяжка / Наливной пол</p>
+      <span id="levelingThickSpan">
+      <input class="input-small" type="number" min="1" max="12" maxlength="4" id="levelingThick" value="1">
+      <small class="muted"><em> - примерная толщина слоя (см).</em></small>
+   </span>
+
+
+<p><input name="level" type="radio" id="needSuperFloor" onchange="levelin_change()" />КНАУФ-суперпол</p>
+      <span id="superFloorThickSpan">
+      <input class="input-small" type="number" maxlength="4" id="superFloorThick" value="6" min="6" max="12">
+      <small class="muted"><em> - примерная толщина слоя (см).</em></small>
+   </span>
+</form>
+</div>
+
+    <label title="Плинтус">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id="needPlinth"/>
+                </div>
+            </div>
+                <div class="form-control" aria-label="Плинтус">Плинтус
+            </div>
+        </div>
+    </label>
+
+
+
+       <h6>Материал пола:</h6>
+
+        <select id="floorFinish" onchange="moneyCalc.isDiagonal()">
+            <option value="0">Выберите</option>
+            <option value="1">Ламинат</option>
+            <option value="2">Плитка</option>
+           <option value="3">Паркетная доска</option>
+           <option value="4">Линолеум</option>
+        </select>
+
+
+        <p><label id="diagonal" ><input type="checkbox" id="isFloorTilesDiagonal" /> По диагонали</label>
+        </p>
+</div>
+            </div>
+
+
+
+  <hr>
+
+<!--     <div class="btn-group"> -->
+  <input type="submit" onclick="moneyCalc.calculateAll(1)" value="Рассчитать стоимость"></input>
+  <br>
+<!--   </div> -->
+
+<!--   ******************************** -->
+<!--   BEGIN show full sum -->
+<!--   ****************************** -->
+
+   <div id="priceSum" class="col-md-8 ceilingDiv">
+         <h3>Стоимость работ:</h3>
+          <div class="ceilingDiv bgBlue" id='poto'>
+           <h5>Потолок: <span class="largeFont" id="calcCeiling"></span> руб.</h5>
+            <div id="calcCeilingExt">
+            </div>
+          </div>
+          <div class="ceilingDiv bgYellow" id='ste'>
+           <h5>Стены: <span class="largeFont" id="calcWall"></span> руб.</h5>
+            <div id="calcWallExt">
+            </div>
+          </div>
+         <div class="ceilingDiv bgBroun" id='pol'>
+          <h5>Пол: <span class="largeFont" id="calcFloor"></span> руб.</h5>
+            <div id="calcFloorExt">
+            </div>
+         </div>
+         <h3>Всего: <span class="largeFont" id="allSum"></span> руб.</h3>
+      </div>
+
+   <br>
+
+<!--  END show full sum -->
+
+<!-- *************************** -->
+<!--     CALCULATE MATERIALS     -->
+<!-- *************************** -->
+
+    <input type="submit" onclick="print_amount()" value="Рассчитать материалы"/>
+
+      <div id="matSum" class="col-md-8 ceilingDiv">
+         <h3>Количество материалов:</h3>
+          <div class="bgBlue " id="matCeilingDiv">
+           <h5>Потолок: <span class="largeFont" id="matCeiling"></span> </h5>
+            <div id="matCeilingExt">
+            </div>
+          </div>
+          <div class="bgYellow" id="matWallDiv">
+           <h5>Стены: <span class="largeFont" id="matWall"></span> </h5>
+            <div id="matWallExt">
+            </div>
+          </div>
+         <div class="bgBroun" id="matFloorDiv">
+          <h5>Пол: <span class="largeFont" id="matFloor"></span> </h5>
+            <div id="matFloorExt">
+            </div>
+         </div>
+<div class="row_fluid">
+<div class="span12">
+               <h3>Всего: <span class="largeFont" id="matAmountAll"></span> </h3>
+                     <div id="matAmountAllExt">
+            </div>
+            </div>
+</div>
+
+      </div>
+
+<!--         </div> -->
+
+<!--     to_sender -->
+
+        <div class="col-md-4">
+            <form method="post" id='to_sender' action="o-nas">
+                <input name="itogo" id="itogo" type="hidden"/>
+                <input name="amount" id="amount" type="hidden"/>
+                <input name="name" id="name" type="text" maxlength="30" value="Ваше имя"/>
+                <input name="mail" id="mail" type="tel" maxlength="30" value="Телефон или e-mail"/>
+
+<!--                 <p>*<small class="muted"><em> - заполнять необязательно</em></small></p> -->
+<!--                <input name="materials" id="materials" type="hidden"/>
+                <input name="assoc" id="assoc"  type="hidden"/>-->
+<!--                 <div class="btn-group"> -->
+<!-- ///////////////////////////////////////// -->
+<!-- *************** EXTENDED **************** -->
+<!-- ///////////////////////////////////////// -->
+<!--<div class="row-fluid">
+   <div class='span12'>
+   <h3>Дополнительные работы:</h3>
+    <textarea id="dp_work" maxlength="300" rows="4" class="span6">
+
+
+    </textarea>
+   </div>
+  </div>-->
+                <input type=submit onclick="to_sender()" value="Заявка на ремонт"/>
+                <!--</div>-->
+            </form>
+
+</div>
+
+
+</section>
