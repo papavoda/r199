@@ -89,7 +89,7 @@ class PostListView(ListView):
 
 class FavoritesListView(PostListView):  # Наследование от PostListView
     queryset = Post.objects.select_related('category', 'author').filter(status='published', is_favorite=True).order_by(
-        '-changed')
+        '-pub_at')
 
     def get_context_data(self, **kwargs):
         # В первую очередь получаем базовую реализацию контекста

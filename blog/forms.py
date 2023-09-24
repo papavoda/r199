@@ -35,4 +35,4 @@ class PostCreateForm(forms.ModelForm):
             # 'images': forms.ClearableFileInput(attrs={'class': 'form-control', 'multiple': True}),
         }
 
-    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'multiple': True}))
+    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'allow_multiple_selected': True}))

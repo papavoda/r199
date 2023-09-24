@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     # additional libs:
     # 'pytils',  # for custom slugify
+    'rest_framework',
     'django.contrib.humanize',
     'autoslug',
     'mptt',
@@ -62,16 +63,20 @@ INSTALLED_APPS = [
     'snowpenguin.django.recaptcha3',
     "phonenumber_field",
     'phonenumbers',
+    'corsheaders',
     # my apps
     'blog',
     'contact',
     'price',
+    'calc',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # add CorsMiddleware above CommonMiddleWare in MIDDLEWARE
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -203,3 +208,25 @@ EMAIL_HOST_USER = config('DJANGO_EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('DJANGO_EMAIL_HOST_PASSWORD')
 EMAIL_TO = config('DJANGO_EMAIL_TO')
 PHONENUMBER_DEFAULT_REGION = 'RU'
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer',
+    # ],
+    # 'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework.parsers.JSONParser',
+    # ]
+}
+# CORS_ALLOW_ALL_ORIGINS = False
+
+# # https://pypi.org/project/django-cors-headers/
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # for vue.js
+    "http://192.168.0.215:3000",  # for vue.js
+]
+#
+# CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://192.168.0.215", ]

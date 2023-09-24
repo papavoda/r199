@@ -15,7 +15,7 @@ moneyCalc={
   square: 0, //Площадь
 
   gruntPrice:45, // грунтовка;
-  paint:220, // покраска
+  paint:225, // покраска
   
   removeWhitewashPrice:250, //Удаление побелки, краски
   ceilingPlasterPrice:1000 ,//Штукатурка потолка
@@ -119,7 +119,7 @@ moneyCalc={
    this.dWidth = dWidth;
    this.dSum = dSum;
   
-  if (result == 2) // если выбран сложный тип помещения
+  if (result === 2) // если выбран сложный тип помещения
    {
      //периметр
      var p = document.getElementById("perimetr");
@@ -127,7 +127,7 @@ moneyCalc={
      this.square = parseFloat(c.value).toFixed(2);
      r_length = 0;
      r_width = 0;
-  } else if (result == 1) //если выбран простой тип помещения
+  } else if (result === 1) //если выбран простой тип помещения
    {
      this.perimetr = parseFloat((r_length + r_width) * 2).toFixed(2);
      this.square = (r_length * r_width).toFixed(2);
