@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+
+  #django
+  web:
+    build:
+      context: ./django
+      dockerfile: Dockerfile-PROD
+    image: r199-prod
+    restart: unless-stopped
+    user: 1001:1001
+    expose:
+      - 8000
+    container_name: r199_prod
+    depends_on:
+      - db
+
+  # postgres
+  db:
+   build: ./db
+   container_name: r199_db
+   volumes:
+     - postgres_data:/var/lib/postgresql/data/
+   env_file:
+     - ./db/.db.env
+
+  # nginx server
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    container_name: r199_nginx
+    volumes:
+      - ./django/static:/home/app/web/staticfiles
+      # - media_volume:/home/app/web/mediafiles
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:

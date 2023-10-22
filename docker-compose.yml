@@ -1,10 +1,31 @@
 version: '3.9'
 services:
   web:
-    build: .
+    build: ./django
+      # context: .
+      # dockerfile: Dockerfile
+    image: r199-dev
+    env_file:
+      - ./django/.env
     ports:
       - "8000:8000"
-    container_name: r199_web
-    command: python manage.py runserver 0.0.0.0:8000
+    container_name: r199_dev
     volumes:
-      - .:/code
+      - ./django:/code:ro
+      - ./cache:/cache:rw
+    depends_on:
+      - db
+
+  db:
+   image: postgres:15-alpine3.18
+   container_name: r199_db
+   volumes:
+     - postgres_data:/var/lib/postgresql/data/
+   env_file:
+     - ./db/.db.env
+
+
+volumes:
+  postgres_data:
+#networks:
+#  djangonet:

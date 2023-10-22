@@ -1,4 +1,7 @@
-.env
-.directory
 .idea
-venv
+cache
+*.env
+*.directory
+**/.venv
+**/static
+**/media
