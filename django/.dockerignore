@@ -1,5 +1,8 @@
-venv
+.venv
 cache
 .gitignore
 .idea
 .directory
+media
+static
+

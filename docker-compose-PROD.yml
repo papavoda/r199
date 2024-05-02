@@ -8,10 +8,12 @@ services:
       dockerfile: Dockerfile-PROD
     image: r199-prod
     restart: unless-stopped
-    user: 1001:1001
+    user: 1000:1000
     expose:
       - 8000
     container_name: r199_prod
+    env_file:
+      - ./django/.env.prod
     depends_on:
       - db
 
@@ -19,22 +21,11 @@ services:
   db:
    build: ./db
    container_name: r199_db
+   restart: unless-stopped
    volumes:
      - postgres_data:/var/lib/postgresql/data/
    env_file:
      - ./db/.db.env
-
-  # nginx server
-  nginx:
-    build: ./nginx
-    ports:
-      - 1337:80
-    container_name: r199_nginx
-    volumes:
-      - ./django/static:/home/app/web/staticfiles
-      # - media_volume:/home/app/web/mediafiles
-    depends_on:
-      - web
 
 volumes:
   postgres_data:

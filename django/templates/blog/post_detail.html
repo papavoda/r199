@@ -104,6 +104,7 @@
               <div class="comment-form-wrap">
                   <script src='https://www.google.com/recaptcha/api.js'></script>
                 <h3 class="mb-5">Оставить комментарий</h3>
+                  <small>Комментарий будет виден после проверки модератором</small>
                         <form action="{% url 'create_comment' pk=post.id %}" method="post" class="p-5 bg-light">
                             {% csrf_token %}
                             <div class="input-list form-group">

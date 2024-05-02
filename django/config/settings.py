@@ -183,6 +183,8 @@ LOGIN_REDIRECT_URL = '/'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        # for develop
+        # "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         'LOCATION': os.path.join(BASE_DIR, 'cache'),
 
     }
@@ -225,6 +227,6 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 
 #
-# CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://192.168.0.215", ]
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
 

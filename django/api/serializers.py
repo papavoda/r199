@@ -2,7 +2,7 @@ from rest_framework import serializers, request
 from rest_framework.fields import SerializerMethodField
 from rest_framework.reverse import reverse_lazy
 
-# from blog.models import Post
+from blog.models import Post
 from price.models import Price
 from calc.models import Calc, CalcSquare
 
@@ -42,19 +42,19 @@ class PriceListSerializer(serializers.ModelSerializer):
         model = Price
         fields = ('id', 'category', 'category_name', 'name', 'price', 'dimension')
 
-# class PostListSerializer(serializers.ModelSerializer):
-#     main_image_url = SerializerMethodField('get_main_image')
-#     post_url = SerializerMethodField('get_post_absolute_url')
-#
-#     def get_main_image(self, instance):
-#         if instance.main_image:
-#             return instance.main_image.url
-#
-#     def get_post_absolute_url(self, instance):
-#         if instance:
-#             return instance.get_absolute_url()
-#
-#     ### TODO make main_image as url in list view
-#     class Meta:
-#         model = Post
-#         fields = ('id', 'title', 'post_url', 'intro', 'main_image', 'main_image_url')
+
+class PostListSerializer(serializers.ModelSerializer):
+    # main_image_url = SerializerMethodField('get_main_image')
+    post_url = SerializerMethodField('get_post_absolute_url')
+
+    # def get_main_image(self, instance):
+    #     if instance.main_image:
+    #         return instance.main_image.url
+
+    def get_post_absolute_url(self, instance):
+        if instance:
+            return instance.get_absolute_url()
+
+    class Meta:
+        model = Post
+        fields = ('id', 'title', 'post_url', 'intro', 'main_image',)

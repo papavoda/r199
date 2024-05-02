@@ -8,9 +8,9 @@ class PriceAdmin(admin.ModelAdmin):
     class Meta:
         filtered = 'pk'
 
-    list_per_page = 10
-    list_display = ['pk', 'name', 'dimension', 'price', 'category']
-    list_editable = ['price']
+    list_per_page = 30
+    list_display = ['pk', 'name', 'dimension', 'price', 'category', 'use_in_calc']
+    list_editable = ['use_in_calc', ]
 
     # inlines = [ImageInline, ]
     # prepopulated_fields = {'num': ('pk',)}

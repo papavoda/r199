@@ -6,4 +6,6 @@ urlpatterns = [
 
     path('price/', views.PriceView.as_view(), name="price"),
 
+
+
 ]

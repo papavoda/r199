@@ -129,7 +129,7 @@ class Comment(models.Model):
     message = models.TextField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
     # default_avatar = models.ImageField(default='')
 
     class Meta:

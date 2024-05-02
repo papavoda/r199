@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
-
 # Pull base image
-FROM python:3.11-alpine3.18
+FROM python:3.12-alpine
 
 # Set environment variables
 ENV PIP_DISABLE_PIP_VERSION_CHECK 1
@@ -14,7 +13,7 @@ WORKDIR /code
 # Install dependencies
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
-COPY ./uget_to_get.txt /usr/local/lib/python3.11/site-packages/snowpenguin/django/recaptcha3/fields.py
+COPY ./uget_to_get.txt /usr/local/lib/python3.12/site-packages/snowpenguin/django/recaptcha3/fields.py
 
 # Copy entrypoint.sh
 COPY ./entrypoint.sh .
@@ -24,7 +23,7 @@ RUN chmod +x entrypoint.sh
 COPY . .
 
 #Change own
-RUN chown -cR 1001:1001 ./
+RUN mkdir cache && chown -cR 1001:1001 cache
 # run entrypoint.sh
 ENTRYPOINT ["sh", "entrypoint.sh"]
 

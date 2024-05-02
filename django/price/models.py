@@ -25,6 +25,7 @@ class Price(models.Model):
     category = models.ForeignKey(PriceCategory, on_delete=models.CASCADE, related_name='price')
     post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.SET_NULL, related_name='price')
     dimension = models.CharField(max_length=10, default='м²')
+    use_in_calc = models.BooleanField(default=False, help_text='Использ в калькуляторе', )
 
     class Meta:
         ordering = ('pk',)

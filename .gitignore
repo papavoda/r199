@@ -1,7 +1,9 @@
-.idea
-cache
-*.env
+**/.idea
+*cache
+*.env*
 *.directory
 **/.venv
-**/static
 **/media
+**/__pycache__
+**/migrations/*
+!**/migrations/__init__.py
