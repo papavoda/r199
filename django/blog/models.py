@@ -4,10 +4,9 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
-from ckeditor.fields import RichTextField
 from autoslug import AutoSlugField
 from django.template.defaultfilters import slugify  # new
-
+from django_ckeditor_5.fields import CKEditor5Field
 
 class Category(MPTTModel):
     name = models.CharField(max_length=100)
@@ -75,7 +74,7 @@ class Post(models.Model):
     intro = models.TextField(max_length=500, default='',
                              help_text='Little intro text')
     # RichTextField -> for ckeditor
-    text = RichTextField(max_length=8000)
+    text = CKEditor5Field(max_length=8000, verbose_name='Основной текст', config_name='extends')
 
     category = models.ForeignKey(Category, related_name="post",
                                  on_delete=models.SET_NULL,

@@ -4,7 +4,7 @@ charset-normalizer==3.3.2
 dj-database-url==2.1.0
 Django==5.0.4
 django-autoslug==1.9.9
-django-ckeditor==6.7.1
+django-ckeditor-5==0.2.12
 django-cors-headers==4.3.1
 django-debug-toolbar==4.3.0
 django-js-asset==2.2.0

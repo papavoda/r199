@@ -9,11 +9,13 @@ services:
     image: r199-prod
     restart: unless-stopped
     user: 1000:1000
-    expose:
-      - 8000
+    ports:
+      - "8014:8000"
     container_name: r199_prod
     env_file:
       - ./django/.env.prod
+    volumes:
+      - ./django:/code
     depends_on:
       - db
 

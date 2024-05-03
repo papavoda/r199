@@ -20,10 +20,11 @@ COPY ./entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
 #Copy all django
-COPY . .
+#COPY . .
 
 #Change own
-RUN mkdir cache && chown -cR 1001:1001 cache
+#RUN mkdir cache && chown -cR 1001:1001 cache
 # run entrypoint.sh
 ENTRYPOINT ["sh", "entrypoint.sh"]
+
 

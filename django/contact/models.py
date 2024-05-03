@@ -1,5 +1,5 @@
 from django.db import models
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -40,7 +40,7 @@ class About(models.Model):
                                    help_text="add main about img 1280x853")
     name = models.CharField(max_length=25)
     slogan = models.CharField(max_length=100)
-    text = RichTextField(max_length=200)
+    text = CKEditor5Field(max_length=200)
 
     def get_first_image(self):
         # обращение к related_name="about_images" class ImageAbout line 48

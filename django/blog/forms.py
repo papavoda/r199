@@ -1,7 +1,7 @@
 from django import forms
 from .models import Comment, Post, Image
-from ckeditor.fields import RichTextField
 from snowpenguin.django.recaptcha3.fields import ReCaptchaField
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class CommentForm(forms.ModelForm):
@@ -30,7 +30,7 @@ class PostCreateForm(forms.ModelForm):
             'description': forms.TextInput(attrs={'placeholder': 'Описание *', 'class': 'form-control'}),
             'keywords': forms.TextInput(attrs={'placeholder': 'Ключевые слова *', 'class': 'form-control'}),
             'intro': forms.Textarea(attrs={'placeholder': 'Интро *', 'class': 'form-control'}),
-            'text ': RichTextField(max_length=8000),
+            'text ': CKEditor5Field(max_length=8000),
             'main_image': forms.ClearableFileInput(attrs={'class': 'form-control', 'multiple': False}),
             # 'images': forms.ClearableFileInput(attrs={'class': 'form-control', 'multiple': True}),
         }
