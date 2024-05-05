@@ -6,6 +6,7 @@ services:
       # dockerfile: Dockerfile
     image: r199-dev
     restart: unless-stopped
+    user: 1000:1000
     env_file:
       - ./django/.env
     ports:
@@ -14,6 +15,7 @@ services:
     volumes:
       - ./django:/code:rw
       - ./django/cache:/code/cache:rw
+    command: "python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db
 

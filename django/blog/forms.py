@@ -31,8 +31,9 @@ class PostCreateForm(forms.ModelForm):
             'keywords': forms.TextInput(attrs={'placeholder': 'Ключевые слова *', 'class': 'form-control'}),
             'intro': forms.Textarea(attrs={'placeholder': 'Интро *', 'class': 'form-control'}),
             'text ': CKEditor5Field(max_length=8000),
-            'main_image': forms.ClearableFileInput(attrs={'class': 'form-control', 'multiple': False}),
-            # 'images': forms.ClearableFileInput(attrs={'class': 'form-control', 'multiple': True}),
-        }
+            'main_image': forms.ClearableFileInput(attrs={'class': 'form-control',}),
 
-    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'allow_multiple_selected': True}))
+        }
+    images = forms.FileField(required=False, widget=forms.ClearableFileInput(
+        attrs={'class': 'form-control', 'multiple': '', 'accept': "image/jpeg, image/png, image/gif"})
+                              )

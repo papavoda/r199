@@ -17,8 +17,8 @@ COPY ./uget_to_get.txt /usr/local/lib/python3.12/site-packages/snowpenguin/djang
 
 # Copy project
 #COPY . .
-EXPOSE 8000
-
-ENTRYPOINT ["python", "manage.py", "runserver"]
-CMD ["0.0.0.0:8000"]
+#EXPOSE 8000
+#
+#ENTRYPOINT ["python", "manage.py", "runserver"]
+#CMD ["0.0.0.0:8000"]
 

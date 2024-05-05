@@ -2,9 +2,11 @@
 {% block title %}{{ request.site.name }} - {{ main_title }}{% endblock %}
 {% block add_to_head %}{% endblock %}
 {% block content %}
+<style>
 
+</style>
 <section class="ftco-section ftco-degree-bg">
-<div class="container">
+<div class="container" >
 <div class="row">
 <form method="post"  enctype="multipart/form-data">
     {% csrf_token %}
