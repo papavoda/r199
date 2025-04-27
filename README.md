@@ -1,4 +1,2 @@
-For development:
-    docker compose up -d
-For production (port 1337):
-    docker compose -f docker-compose-PROD.yml up -d
+For production run:
+   docker compose --env-file .env-compose  -f docker-compose-PROD.yml up -d
