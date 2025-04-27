@@ -5,7 +5,6 @@
 *.directory
 **/.venv
 **/media
-**/__pycache__
 **/migrations/*
 !**/migrations/__init__.py
-
+__pycache__/
