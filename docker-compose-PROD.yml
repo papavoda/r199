@@ -13,8 +13,8 @@ services:
     env_file:
       - ./django/.env.prod
     volumes:
-      - ./django:/code:ro
-      - ./django/cache:/code/cache:rw
+      - ./django:/code
+      - ${MEDIA_NGINX}:/code/media
     depends_on:
       - db
 

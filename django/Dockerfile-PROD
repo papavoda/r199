@@ -10,10 +10,17 @@ ENV PYTHONUNBUFFERED 1
 # set work directory
 WORKDIR /code
 
+RUN mkdir -p /code/cache && \
+  chown -R 1000:1000 /code/cache
+RUN mkdir -p /code/media && \
+  chown -R 1000:1000 /code/media
+
+
 # Install dependencies
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 COPY ./uget_to_get.txt /usr/local/lib/python3.12/site-packages/snowpenguin/django/recaptcha3/fields.py
+
 
 # Copy entrypoint.sh
 COPY ./entrypoint.sh .
@@ -26,5 +33,6 @@ RUN chmod +x entrypoint.sh
 #RUN mkdir cache && chown -cR 1001:1001 cache
 # run entrypoint.sh
 ENTRYPOINT ["sh", "entrypoint.sh"]
+
 
 
