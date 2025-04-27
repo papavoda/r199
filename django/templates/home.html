@@ -2,6 +2,11 @@
 {% load about_tags cache%}
 {% cache 5000 home %}
 {% block title %}{{ request.site.name }} - {{ title }}{% endblock title %}
+    {% block add_to_head %}
+        <meta property="og:title" content="{{ request.site.name }} - {{ title }}" />
+    <meta property="og:description" content="Краткое описание вашего сайта или страницы" />
+    <meta property="og:image" content="URL вашего изображения" />
+    {% endblock %}
 {% block content %}
     {#   HERO#}
 {% include 'hero.html' %}

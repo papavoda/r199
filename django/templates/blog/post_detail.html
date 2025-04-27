@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 {% load humanize %}
-{% load mptt_tags blog_tags static recaptcha3%}
+{% load mptt_tags blog_tags static%}
 {% block title %}{{ request.site.name }} - {{ post.title }}{% endblock %}
 {% block keywords %}{{ post.keywords }}{% endblock %}
 {% block description %}{{ post.description }}{% endblock%}
 
 {% block add_to_head %}
-{% recaptcha_init %}
-  {% recaptcha_ready action_name='homepage' %}
+{#{% recaptcha_init %}#}
+{#  {% recaptcha_ready action_name='homepage' %}#}
+    <meta property="og:title" content="{{ post.title }}" />
+    <meta property="og:description" content="{{ post.description }}" />
+    <meta property="og:url" content="https://remont199.com/{{  request.path }}" />
+    <meta property="og:image" content="{{ post.main_image.url }}" />
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:secure_url" content="{{ post.main_image.url }}" />
+
 {% endblock %}
 {% block content %}
-
 <section class="ftco-section ftco-degree-bg">
       <div class="container">
         <div class="row">
@@ -101,29 +108,29 @@
                     {% endif %}
                 {% endwith %}
 {#END comment-list#}
-              <div class="comment-form-wrap">
-                  <script src='https://www.google.com/recaptcha/api.js'></script>
-                <h3 class="mb-5">Оставить комментарий</h3>
-                  <small>Комментарий будет виден после проверки модератором</small>
-                        <form action="{% url 'create_comment' pk=post.id %}" method="post" class="p-5 bg-light">
-                            {% csrf_token %}
-                            <div class="input-list form-group">
-                                {{ form.name }}
-                            </div>
-                            <div class="input-list form-group">
-                                {{ form.email }}
-                            </div>
-                            <div class="input-list form-group">
-                                {{ form.message }}
-                            </div>
-                            <div class="input-list form-group">
-                                {{ form.captcha }}
-                            </div>
-                            <div class="input-list">
-                                <input type="submit" value="Отправить" class="btn py-3 px-4 btn-primary">
-                            </div>
-                        </form>
-              </div>
+{#              <div class="comment-form-wrap">#}
+{#                  <script src='https://www.google.com/recaptcha/api.js'></script>#}
+{#                <h3 class="mb-5">Оставить комментарий</h3>#}
+{#                  <small>Комментарий будет виден после проверки модератором</small>#}
+{#                        <form action="{% url 'create_comment' pk=post.id %}" method="post" class="p-5 bg-light">#}
+{#                            {% csrf_token %}#}
+{#                            <div class="input-list form-group">#}
+{#                                {{ form.name }}#}
+{#                            </div>#}
+{#                            <div class="input-list form-group">#}
+{#                                {{ form.email }}#}
+{#                            </div>#}
+{#                            <div class="input-list form-group">#}
+{#                                {{ form.message }}#}
+{#                            </div>#}
+{#                            <div class="input-list form-group">#}
+{#                                {{ form.captcha }}#}
+{#                            </div>#}
+{#                            <div class="input-list">#}
+{#                                <input type="submit" value="Отправить" class="btn py-3 px-4 btn-primary">#}
+{#                            </div>#}
+{#                        </form>#}
+{#              </div>#}
             </div>
 {#END COMMENTS#}
           </div> <!-- .col-md-8 -->

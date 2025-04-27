@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     # https://proghunter.ru/articles/django-base-2023-adding-ckeditor-5-to-django-41
     'django_ckeditor_5',
     'debug_toolbar',
-    'snowpenguin.django.recaptcha3',
+    # 'snowpenguin.django.recaptcha3',
+    'django_recaptcha',
     "phonenumber_field",
     'phonenumbers',
     'corsheaders',
@@ -129,7 +130,7 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # work in localserver
 
-MEDIA_URL = 'media/'
+MEDIA_URL = 'https://remont199.com/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -156,13 +157,11 @@ CACHES = {
     }
 
 }
-
+# https://github.com/django-recaptcha/django-recaptcha?tab=readme-ov-file
+# RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', }
 RECAPTCHA_PUBLIC_KEY = env.str('RECAPTCHA_PUBLIC_KEY', default='')
 RECAPTCHA_PRIVATE_KEY = env.str('RECAPTCHA_PRIVATE_KEY', default='')
-RECAPTCHA_DEFAULT_ACTION = 'generic'
-RECAPTCHA_SCORE_THRESHOLD = 0.5
-# SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
-RECAPTCHA_DISABLE = env.bool('RECAPTCHA_DISABLE', default=True)
+RECAPTCHA_DISABLE = env.bool('RECAPTCHA_DISABLE', default=False)
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env.str('DJANGO_EMAIL_HOST', default='smtp.gmail.com')

@@ -1,6 +1,7 @@
 from django import forms
 from .models import Comment, Post, Image
-from snowpenguin.django.recaptcha3.fields import ReCaptchaField
+# from snowpenguin.django.recaptcha3.fields import ReCaptchaField
+from django_recaptcha.fields import ReCaptchaField
 from django_ckeditor_5.fields import CKEditor5Field
 
 
