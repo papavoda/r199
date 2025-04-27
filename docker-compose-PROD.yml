@@ -1,6 +1,4 @@
-version: '3.9'
 services:
-
   #django
   web:
     build:
@@ -15,7 +13,8 @@ services:
     env_file:
       - ./django/.env.prod
     volumes:
-      - ./django:/code
+      - ./django:/code:ro
+      - ./django/cache:/code/cache:rw
     depends_on:
       - db
 
