@@ -118,7 +118,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):  # new
         if not self.slug:
             self.slug = slugify(self.title)
-        if self.main_image:
+        if self.main_image and not self.main_image.name.lower().endswith('.webp'):
             self.main_image = convert_image_to_webp(self.main_image, max_size=800)
 
         return super().save(*args, **kwargs)
@@ -150,11 +150,8 @@ class Favorites(models.Model):
     is_favorites = False
 
 
-
-
-
 class Image(models.Model):
-    name = models.CharField(max_length=50, default='')  # alt
+    name = models.CharField(max_length=50, default='', blank=True, null=True)  # alt
     post = models.ForeignKey('Post', related_name='images', on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to=image_upload_directory)
     validators = [validate_file_extension]

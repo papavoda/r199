@@ -130,7 +130,11 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # work in localserver
 
-MEDIA_URL = 'https://remont199.com/media/'
+if DEBUG:
+    MEDIA_URL = 'media/'
+else:
+    MEDIA_URL = 'https://remont199.com/media/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -284,3 +288,12 @@ CKEDITOR_5_CONFIGS = {
         }
     }
 }
+
+IMAGE_PROCESSING = {
+    'MAX_WIDTH': 1280,
+    'WATERMARK_PATH': os.path.join(BASE_DIR, 'static/watermark_new.webp'),
+    'WATERMARK_OPACITY': 0.2,  # 0.0-1.0
+    'WATERMARK_POSITION': 'SouthEast',  # or 'Center'
+    'WATERMARK_OFFSET': (130, 90),  # X,Y padding
+}
+
