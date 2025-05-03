@@ -1,3 +1,4 @@
+
 from django.db import models
 # для организации вложенности
 from mptt.models import MPTTModel, TreeForeignKey
@@ -7,6 +8,8 @@ from django.shortcuts import reverse
 from autoslug import AutoSlugField
 from django.template.defaultfilters import slugify  # new
 from django_ckeditor_5.fields import CKEditor5Field
+from blog.services.utils import validate_file_extension, image_upload_directory, upload_directory_path, convert_image_to_webp
+
 
 class Category(MPTTModel):
     name = models.CharField(max_length=100, help_text='Название категории')
@@ -49,9 +52,6 @@ class Tag(models.Model):
         return self.name
 
 
-def upload_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return f'articles/{instance.author}/{instance.slug}/{filename}'
 
 
 class Post(models.Model):
@@ -118,6 +118,9 @@ class Post(models.Model):
     def save(self, *args, **kwargs):  # new
         if not self.slug:
             self.slug = slugify(self.title)
+        if self.main_image:
+            self.main_image = convert_image_to_webp(self.main_image, max_size=800)
+
         return super().save(*args, **kwargs)
 
     def __str__(self):
@@ -147,16 +150,19 @@ class Favorites(models.Model):
     is_favorites = False
 
 
-# for Image upload
-def image_upload_directory(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/instance.post.author/instance.post.slug/<filename>
-    return f'articles/{instance.post.author}/{instance.post.slug}/{filename}'
+
 
 
 class Image(models.Model):
     name = models.CharField(max_length=50, default='')  # alt
-    post = models.ForeignKey(Post, related_name='images', on_delete=models.SET_NULL, null=True)
+    post = models.ForeignKey('Post', related_name='images', on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to=image_upload_directory)
+    validators = [validate_file_extension]
+
+    def save(self, *args, **kwargs):
+        if self.image and not self.image.name.lower().endswith('.webp'):
+            self.image = convert_image_to_webp(self.image)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.name} - {self.image}'
