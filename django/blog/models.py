@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify  # new
 from django_ckeditor_5.fields import CKEditor5Field
 
 class Category(MPTTModel):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, help_text='Название категории')
     slug = models.SlugField(max_length=100, null=False, unique=True)
     parent = TreeForeignKey(
         'self',
@@ -59,10 +59,15 @@ class Post(models.Model):
         ('draft', 'Draft'),
         ('published', 'Published'),
     )
-    keywords = models.CharField(max_length=100, default='')
-    description = models.CharField(max_length=500, default='')
+
+    # Begin html meta-data
+    keywords = models.CharField(max_length=100, default='', help_text='Meta keywords')
+    description = models.CharField(max_length=300, default='', help_text='Meta description')
+    meta_title = models.CharField(max_length=300, blank=True, default='', null=True, help_text='Meta title')
+    # End html meta-data
+
     title = models.CharField(max_length=500)
-    # slug = models.SlugField(max_length=64, null=True, blank=True)
+
     # TODO check autoslug
     slug = AutoSlugField(populate_from='title', unique=True)
     author = models.ForeignKey(User,

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% load mptt_tags blog_tags static%}
-{% block title %}{{ request.site.name }} - {{ post.title }}{% endblock %}
+{% block title %}{{ post.meta_title }}{% endblock %}
 {% block keywords %}{{ post.keywords }}{% endblock %}
 {% block description %}{{ post.description }}{% endblock%}
 
 {% block add_to_head %}
 {#{% recaptcha_init %}#}
 {#  {% recaptcha_ready action_name='homepage' %}#}
-    <meta property="og:title" content="{{ post.title }}" />
+    <meta property="og:title" content="{{ post.meta_title }}" />
     <meta property="og:description" content="{{ post.description }}" />
     <meta property="og:url" content="https://remont199.com/{{  request.path }}" />
     <meta property="og:image" content="{{ post.main_image.url }}" />
@@ -23,7 +23,7 @@
         <div class="row">
           <div class="col-lg-8 ftco-animate">
 
-            <h2 class="mb-3">{{ post.title }}</h2>
+            <h1 class="mb-3">{{ post.title }}</h1>
               <p>
               <img src="{{ post.main_image.url}}" alt="" class="img-fluid">
             </p>

@@ -1,4 +1,13 @@
 services:
+  db:
+    build: ./db
+    container_name: r199_db
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./db/.db.env
+
   web:
     build: ./django
       # context: .
@@ -18,14 +27,7 @@ services:
     depends_on:
       - db
 
-  db:
-   build: ./db
-   container_name: r199_db
-   restart: unless-stopped
-   volumes:
-     - postgres_data:/var/lib/postgresql/data/
-   env_file:
-     - ./db/.db.env
+
 
 
 volumes:

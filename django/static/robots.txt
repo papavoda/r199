@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /index.php/
+Disallow: /index.php
+Disallow: /accounts/
+Disallow: /search/
+
+Sitemap: https://remont199.com/sitemap.xml

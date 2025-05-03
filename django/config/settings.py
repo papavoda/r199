@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'phonenumbers',
     'corsheaders',
     # my apps
-    'blog',
+    'blog.apps.BlogConfig',
     'contact',
     'price',
     'calc',
