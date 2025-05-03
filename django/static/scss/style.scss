@@ -5,10 +5,10 @@ $font-primary: 'Poppins',Arial, sans-serif;
 
 $white: #fff;
 $black: #000000;
-$darken: #00043c;
-
-$primary: #fdbe34;
-
+//$darken: #00043c;
+$darken: #3275a8;
+//$primary: #fdbe34;
+$primary: #f2b680;
 
 
 @mixin border-radius($radius) {

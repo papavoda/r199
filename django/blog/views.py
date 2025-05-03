@@ -95,7 +95,7 @@ class FavoritesListView(PostListView):  # Наследование от PostList
         # Добавляем новую переменную к контексту и инициализируем её некоторым значением
         # context['raw_list'] = Post.objects.all()
         context['nbar'] = 'favorites'
-        context['main_title'] = 'наши работы'
+        context['main_title'] = 'Наши работы'
         return context
 
 

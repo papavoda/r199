@@ -1,2 +1,7 @@
 For production run:
-   docker compose --env-file .env-compose  -f docker-compose-PROD.yml up -d
+git clone https://github.com/papavoda/r199.git
+Copy .env-compose .env.prod .db.env to directories
+docker compose --env-file .env-compose  -f docker-compose-PROD.yml up -d
+docker exec -ti <YOUR_CONTAINER> python manage.py migrate
+cat BACKUP.sql | docker exec -i  <DB_CONTAINER> psql -U <USER> -d <DB_NAME>
+( last command run twice )
