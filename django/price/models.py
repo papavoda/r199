@@ -26,9 +26,18 @@ class Price(models.Model):
     post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.SET_NULL, related_name='price')
     dimension = models.CharField(max_length=10, default='м²')
     use_in_calc = models.BooleanField(default=False, help_text='Использ в калькуляторе', )
+     # Поле для ручной сортировки внутри категории
+    # Поле для ручной сортировки с плавающей точкой
+    position = models.FloatField(
+        default=0.0,
+        verbose_name='Позиция',
+        help_text='Число для порядка сортировки (меньше = выше). Можно использовать дроби для точной вставки между элементами.'
+    )
 
     class Meta:
-        ordering = ('pk',)
+        # ordering = ('pk',)
+        ordering = ['category', 'position', 'name']  # Сортировка по категории, затем по позиции, затем по имени
+        # unique_together = ['category', 'position']  # Опционально: уникальная позиция в пределах категории
 
     # переменные внешнего ключа
     def get_price_categories(self):
@@ -36,7 +45,37 @@ class Price(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        # Автоматическая установка позиции если не указана
+        if self.position == 0.0:
+            last_item = Price.objects.filter(
+                category=self.category
+            ).order_by('-position').first()
+            self.position = (last_item.position + 1.0) if last_item else 1.0
+        super().save(*args, **kwargs)
 
+    def get_next_position(self):
+        """Возвращает следующую позицию для категории"""
+        last_item = Price.objects.filter(
+            category=self.category
+        ).order_by('-position').first()
+        return (last_item.position + 1.0) if last_item else 1.0
+
+    def move_to_position(self, new_position):
+        """Перемещает элемент на указанную позицию, сдвигая другие при необходимости"""
+        from django.db.models import F
+        import math
+        
+        # Если позиция занята, сдвигаем все последующие элементы
+        if Price.objects.filter(category=self.category, position=new_position).exists():
+            Price.objects.filter(
+                category=self.category, 
+                position__gte=new_position
+            ).update(position=F('position') + 1.0)
+        
+        self.position = new_position
+        self.save()
 
 # class Material(models.Model):
 #     name = models.CharField(max_length=100)  # rotband
