@@ -19,8 +19,8 @@ from django.contrib import admin
 
 @admin.register(Price)
 class PriceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'position', 'price', 'use_in_calc']
-    list_editable = ['position', 'use_in_calc']
+    list_display = [ 'category', 'position', 'name',  'price', 'use_in_calc']
+    list_editable = ['position', 'use_in_calc', 'price',]
     list_filter = ['category', 'use_in_calc']
     ordering = ['category', 'position']
     actions = ['renumber_positions']
