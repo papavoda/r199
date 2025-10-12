@@ -9,7 +9,8 @@ services:
       - ./db/.db.env
 
   web:
-    build: ./django
+    build:
+      ./django
       # context: .
       # dockerfile: Dockerfile
     image: r199-dev
@@ -26,9 +27,6 @@ services:
     command: "python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db
-
-
-
 
 volumes:
   postgres_data:
