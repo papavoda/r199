@@ -1,5 +1,4 @@
 import datetime
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,7 +15,7 @@ from contact.forms import ContactUsForm
 from .models import Post, Category, Comment, Tag, Image
 from contact.models import HomeHeroSlogans
 
-
+# 
 class HomeView(TemplateView):
     model = Post
     template_name = 'home.html'

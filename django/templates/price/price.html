@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% load blog_tags %} 
+{% load blog_tags cache %} 
 {% block title %}{{ request.site.name }} - {{ main_title }}{% endblock title %} 
 {% block extendeed_js %}
 {% verbatim %} function toggle_visibility(id) { var span =
@@ -9,7 +9,7 @@ if(e.style.display === 'block') { e.style.display = 'none'; span.className =
 'ion-ios-arrow-down'; } } {% endverbatim %} {% endblock %} 
 {% block content %}
 {% include 'hero_over_home.html' %}
-
+{% cache 5000 price %}
 <section class="ftco-section ftco-degree-bg">
   <div class="container">
     <div class="row">
@@ -72,7 +72,7 @@ if(e.style.display === 'block') { e.style.display = 'none'; span.className =
         </div>
 
         {% endfor %} 
-
+{% endcache %}
         <div class="tag-widget post-tag-container mb-5 mt-5">
           <div class="tagcloud">
             {% with tags=post.get_tags %} {% for tag in tags %}

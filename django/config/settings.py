@@ -157,7 +157,7 @@ CACHES = {
         # for develop
         # "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         'LOCATION': os.path.join(BASE_DIR, 'cache'),
-
+        'TIMEOUT': 100,
     }
 
 }

@@ -40,7 +40,7 @@ class PriceListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Price
-        fields = ('id', 'category', 'category_name', 'name', 'price', 'dimension')
+        fields = ('id', 'position', 'category', 'category_name', 'name', 'price', 'dimension')
 
 
 class PostListSerializer(serializers.ModelSerializer):
