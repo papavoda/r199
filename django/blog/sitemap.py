@@ -9,7 +9,7 @@ class PostSitemap(Sitemap):
     protocol = 'https'
 
     def items(self):
-        return Post.objects.all()
+        return Post.objects.filter(status='published')
 
     def lastmod(self, obj):
         return obj.pub_at
@@ -21,7 +21,22 @@ class StaticSitemap(Sitemap):
     protocol = 'https'
 
     def items(self):
-        return ['post_list', 'favorites_list']
+        return ['home', 'about', 'price', 'post_list', 'favorites_list', 'calc']
 
     def location(self, item):
+        if item == 'calc':
+            return '/calc/'  # SPA served separately by the production web server.
         return reverse(item)
+
+
+class ServiceSitemap(Sitemap):
+    protocol = 'https'
+    changefreq = 'monthly'
+    priority = 0.8
+
+    def items(self):
+        from .site_content import SERVICES
+        return list(SERVICES)
+
+    def location(self, item):
+        return reverse('service_detail', kwargs={'service_slug': item})

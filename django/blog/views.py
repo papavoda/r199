@@ -15,6 +15,10 @@ from .forms import CommentForm, PostCreateForm
 from contact.forms import ContactUsForm
 from .models import Post, Category, Comment, Tag, Image
 from contact.models import HomeHeroSlogans
+from django.http import Http404
+from .site_content import SERVICES
+from django.utils.html import strip_tags
+from django.conf import settings
 
 
 class HomeView(TemplateView):
@@ -31,6 +35,33 @@ class HomeView(TemplateView):
         context['contact_us_form'] = ContactUsForm
         context['title'] = 'Правильный ремонт квартир'
         context['nbar'] = 'home'
+        published = Post.objects.filter(status='published', category__isnull=False).select_related('category')
+        context['featured_projects'] = published.filter(is_favorite=True)[:3]
+        project = published.filter(is_favorite=True).exclude(main_image='').exclude(main_image__isnull=True).first()
+        context['hero_project'] = project
+        context['hero_slide'] = HomeHeroSlogans.objects.filter(hero_section=1).exclude(title_image='').exclude(title_image__isnull=True).first()
+        image = project.main_image if project else (context['hero_slide'].title_image if context['hero_slide'] else None)
+        if image:
+            context['seo_image'] = self.request.build_absolute_uri(image.url)
+        return context
+
+
+class ServiceView(TemplateView):
+    template_name = 'service.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        service = SERVICES.get(self.kwargs['service_slug'])
+        if service is None:
+            raise Http404
+        from price.models import Price
+        condition = Q()
+        for term in service['price_terms']:
+            condition |= Q(name__icontains=term)
+        context.update(service=service, main_title=service['name'], nbar='services',
+                       seo_title=service['name'] + ' в Москве и Московской области — remont199.com',
+                       seo_description=service['summary'] + ' Цены на работы и предварительный расчёт на remont199.com.',
+                       service_prices=Price.objects.filter(condition).select_related('category')[:8])
         return context
 
 
@@ -55,8 +86,10 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         # В первую очередь получаем базовую реализацию контекста
         context = super().get_context_data(**kwargs)
-        context['posts'] = self.object.post.all
+        context['posts'] = self.object.post.filter(status='published')
         context['main_title'] = self.object.name
+        context['seo_title'] = self.object.name + ' — материалы и работы remont199.com'
+        context['seo_description'] = 'Работы и материалы по теме «' + self.object.name + '». Ремонт и отделка квартир в Москве и Московской области.'
         return context
 
 
@@ -101,6 +134,7 @@ class FavoritesListView(PostListView):  # Наследование от PostList
 
 class PostDetailView(DetailView):
     model = Post
+    queryset = Post.objects.filter(status='published')
     context_object_name = "post"
 
     # slug_url_kwarg = 'post_slug'
@@ -113,6 +147,11 @@ class PostDetailView(DetailView):
         context['images'] = self.object.get_images
         context['youtube'] = self.object.get_youtube
         context['comments'] = self.object.get_comments
+        context['seo_title'] = self.object.meta_title or self.object.title
+        context['seo_description'] = strip_tags(self.object.description or self.object.intro or self.object.title)[:300]
+        context['canonical_url'] = settings.SITE_PUBLIC_URL.rstrip('/') + self.object.get_absolute_url()
+        if self.object.main_image:
+            context['seo_image'] = self.request.build_absolute_uri(self.object.main_image.url)
         return context
 
 
@@ -139,8 +178,10 @@ class TagDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         main_title = self.object.name
         context['tag_name'] = main_title
-        context['posts'] = self.object.post.all
+        context['posts'] = self.object.post.filter(status='published')
         context['main_title'] = main_title  # for navbar
+        context['seo_title'] = main_title + ' — статьи и работы remont199.com'
+        context['seo_description'] = 'Публикации и примеры работ по теме «' + main_title + '» на remont199.com.'
         return context
 
 
@@ -172,6 +213,11 @@ class SearchResultsListView(ListView):
     context_object_name = 'post_list'
     template_name = 'blog/post_list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['main_title'] = 'Результаты поиска'
+        return context
+
     # queryset = Post.objects.select_related('category', 'author').filter(status='published', title__icontains="Фото").order_by(
     #     '-pub_at')
 
@@ -179,7 +225,7 @@ class SearchResultsListView(ListView):
         query = self.request.GET.get("q")
         if query:
             return Post.objects.filter(Q(title__icontains=query) & Q(status='published'))
-        return ''
+        return Post.objects.none()
 
 
 class PostEditView:

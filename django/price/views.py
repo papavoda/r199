@@ -23,7 +23,7 @@ class PriceView(TemplateView):
 
         context['prices'] = Price.objects.select_related('category').all()
         context['price_cats'] = PriceCategory.objects.all()
-
+        context['nbar'] = 'price'
         return context
 
 

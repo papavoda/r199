@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load blog_tags %}
-{% block title %}{{ request.site.name }} - {{ main_title }}{% endblock %}
+{% block title %}{{ seo_title }}{% endblock %}
 {% block extendeed_js %}
     {% verbatim %}
     function toggle_visibility(id) {
@@ -46,7 +46,7 @@
                      {% if p.category.id == cat.id %}
                             <tr>
                                 <td>
-                                    {% if not p.post %}
+                                    {% if not p.post or p.post.status != 'published' %}
                                         {{ p.name|capfirst }}
                                     {% else %}
                                         <a href="{{ p.post.get_absolute_url }}">{{ p|capfirst }}</a>
@@ -111,7 +111,7 @@
             {% three_last_posts as  last_posts %}
             {% for post in last_posts %}
               <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({{ post.main_image.url}});"></a>
+                <a class="blog-img mr-4" {% if post.main_image %}style="background-image: url({{ post.main_image.url}});"{% endif %}></a>
                 <div class="text">
                   <h3 class="heading"><a href="{{ post.get_absolute_url }}">{{ post.title}}</a></h3>
                   <div class="meta">

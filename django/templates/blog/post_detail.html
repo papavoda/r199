@@ -1,32 +1,22 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% load mptt_tags blog_tags static%}
-{% block title %}{{ post.meta_title }}{% endblock %}
+{% block title %}{{ post.meta_title|default:post.title }}{% endblock %}
 {% block keywords %}{{ post.keywords }}{% endblock %}
-{% block description %}{{ post.description }}{% endblock%}
+{% block description %}{{ seo_description }}{% endblock%}
 
-{% block add_to_head %}
-{#{% recaptcha_init %}#}
-{#  {% recaptcha_ready action_name='homepage' %}#}
-    <meta property="og:title" content="{{ post.meta_title }}" />
-    <meta property="og:description" content="{{ post.description }}" />
-    <meta property="og:url" content="https://remont199.com/{{  request.path }}" />
-    <meta property="og:image" content="{{ post.main_image.url }}" />
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:secure_url" content="{{ post.main_image.url }}" />
+{% block og_type %}article{% endblock %}
 
-{% endblock %}
 {% block content %}
 <section class="ftco-section ftco-degree-bg">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 ftco-animate">
 
-            <h1 class="mb-3">{{ post.title }}</h1>
-              <p>
+            <h1 class="mb-3">{{ post.title }}</h1><dl class="r-project-meta">{% if post.project_area %}<div><dt>Площадь</dt><dd>{{ post.project_area|floatformat }} м²</dd></div>{% endif %}{% if post.project_location %}<div><dt>Объект</dt><dd>{{ post.project_location }}</dd></div>{% endif %}{% if post.project_duration %}<div><dt>Срок</dt><dd>{{ post.project_duration }}</dd></div>{% endif %}{% if post.project_cost %}<div><dt>Стоимость работ</dt><dd>{{ post.project_cost|floatformat:0 }} ₽</dd></div>{% endif %}</dl>
+              {% if post.main_image %}<p>
               <img src="{{ post.main_image.url}}" loading="lazy" alt="" class="img-fluid">
-            </p>
+            </p>{% endif %}
               <p>
                   {{ post.intro }}
 
@@ -97,7 +87,7 @@
                           {% for comm in comms%}
                             <li class="comment">
                                 <div class="vcard bio">
-                                    <img src="{{ post.main_image.url }}" alt="Image placeholder">
+                                    {% if post.main_image %}<img src="{{ post.main_image.url }}" alt="Image placeholder">{% endif %}
                                 </div>
                                 <div class="comment-body">
                                     <h3>{{comm.name }}</h3>
@@ -164,7 +154,7 @@
 {#            {{ last_posts }}#}
             {% for post in last_posts %}
               <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({{ post.main_image.url}});"></a>
+                <a class="blog-img mr-4" {% if post.main_image %}style="background-image: url({{ post.main_image.url}});"{% endif %}></a>
                 <div class="text">
                   <h3 class="heading"><a href="{{ post.get_absolute_url }}">{{ post.title}}</a></h3>
                   <div class="meta">

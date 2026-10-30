@@ -92,6 +92,11 @@ class Post(models.Model):
                               choices=STATUS_CHOICES,
                               default='draft')
     is_favorite = models.BooleanField(default=False, help_text='В избранное', )
+    project_area = models.DecimalField('Площадь объекта, м²', max_digits=8, decimal_places=1, null=True, blank=True)
+    project_location = models.CharField('Расположение объекта', max_length=150, blank=True)
+    project_duration = models.CharField('Срок выполнения', max_length=100, blank=True)
+    project_cost = models.DecimalField('Стоимость работ, ₽', max_digits=12, decimal_places=0, null=True, blank=True,
+                                     help_text='Только подтверждённая стоимость выполненных работ, если её можно публиковать.')
     views_count = models.BigIntegerField(default=0, null=True, blank=True, verbose_name='Количество просмотров', )
 
     class Meta:

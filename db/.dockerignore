@@ -1,0 +1,9 @@
+.env
+.env.*
+.env-*
+*.env
+*.env.*
+*.env-*
+*.sql
+*.sql.gz
+*.dump

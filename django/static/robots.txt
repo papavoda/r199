@@ -1,7 +1,12 @@
 User-agent: *
-Disallow: /index.php/
-Disallow: /index.php
+Disallow: /admin/
 Disallow: /accounts/
-Disallow: /search/
+Disallow: /api/
+Disallow: /__debug__/
+Disallow: /ckeditor5/
+Disallow: /contact_us/
+Disallow: /comment/
+Disallow: /blog/post-create/
+Disallow: /index.php
 
 Sitemap: https://remont199.com/sitemap.xml

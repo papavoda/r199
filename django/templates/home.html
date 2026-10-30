@@ -1,19 +1,14 @@
 {% extends 'base.html' %}
-{% load about_tags cache%}
-{% cache 5000 home %}
-{% block title %}{{ request.site.name }} - {{ title }}{% endblock title %}
-    {% block add_to_head %}
-        <meta property="og:title" content="{{ request.site.name }} - {{ title }}" />
-    <meta property="og:description" content="Краткое описание вашего сайта или страницы" />
-    <meta property="og:image" content="URL вашего изображения" />
-    {% endblock %}
+{% block title %}{{ seo_title }}{% endblock %}
 {% block content %}
-    {#   HERO#}
-{% include 'hero.html' %}
-{#    end HERO#}
-
-    {# BEGIN ALL BASE TMP#}
-{% include 'all_base_tmp.html' %}
-{#    END ALL BASE TMP#}
-{% endblock %}
-{% endcache %}
+<section class="r-hero"><div class="container r-hero-grid"><div class="r-hero-copy">
+<p class="r-eyebrow">Москва и Московская область</p><h1>Ремонт квартир.<br><em>Внимание к деталям.</em></h1>
+<p class="r-hero-subtitle">Ремонт квартир в Москве и Московской области</p><p class="r-lead">От подготовки стен до финишной отделки. Посмотрите наши работы, сравните расценки и начните с расчёта своего проекта.</p>
+<div class="r-actions"><a class="r-button" href="https://remont199.com/calc/">Рассчитать стоимость ↗</a>{% if site_phone_href %}<a class="r-button r-button-light" href="{{ site_phone_href }}">Позвонить</a>{% else %}<a class="r-button r-button-light" href="{% url 'about' %}#contact">Обсудить ремонт</a>{% endif %}</div>
+<div class="r-hero-links"><a href="{% url 'favorites_list' %}">Реальные работы ↗</a><a href="{% url 'price' %}">Открытый прайс ↗</a></div></div>
+<figure class="r-hero-photo">{% if hero_project %}<img src="{{ hero_project.main_image.url }}" alt="{{ hero_project.title }}" fetchpriority="high" width="800" height="900">{% elif hero_slide %}<img src="{{ hero_slide.title_image.url }}" alt="Пример отделки remont199.com" fetchpriority="high" width="800" height="900">{% else %}<div class="r-photo-empty"><span>Детали создают<br>пространство.</span></div>{% endif %}<figcaption><span>remont199.com / отделка в деталях</span>{% if hero_project %}<a href="{{ hero_project.get_absolute_url }}">Смотреть объект ↗</a>{% else %}<a href="{% url 'favorites_list' %}">Наши работы ↗</a>{% endif %}</figcaption></figure></div></section>
+<section class="r-section" id="services"><div class="container"><div class="r-section-heading"><div><p class="r-eyebrow">Что мы делаем</p><h2>От основы до фактуры</h2></div><a class="r-text-link" href="{% url 'price' %}">Все расценки ↗</a></div><div class="r-services">{% for slug, service in site_services.items %}<a class="r-service" href="{% url 'service_detail' service_slug=slug %}"><span class="r-service-number">0{{ forloop.counter }} /</span><h3>{{ service.name }}</h3><p>{{ service.summary }}</p><span class="r-text-link">Подробнее ↗</span></a>{% endfor %}</div></div></section>
+<section class="r-section r-section-tint"><div class="container"><div class="r-section-heading"><div><p class="r-eyebrow">Портфолио</p><h2>Работы говорят за нас</h2></div><a class="r-text-link" href="{% url 'favorites_list' %}">Все работы ↗</a></div><div class="r-projects">{% for post in featured_projects %}{% include 'blog/project_card.html' %}{% empty %}<p>Примеры отделки и описания работ смотрите в <a href="{% url 'favorites_list' %}">портфолио</a>.</p>{% endfor %}</div></div></section>
+<section class="r-section"><div class="container r-process"><div><p class="r-eyebrow">С чего начать</p><h2>Ваш ремонт.<br>Понятный первый шаг.</h2><p>Для первого разговора достаточно площади квартиры, фотографий и ваших пожеланий.</p></div><ol class="r-steps"><li><h3>Посмотрите примеры</h3><p>Выберите близкие вам материалы и решения в наших работах.</p></li><li><h3>Прикиньте бюджет</h3><p>Используйте прайс и калькулятор для предварительной оценки.</p></li><li><h3>Обсудим детали</h3><p>Уточним состояние помещения, состав работ и условия выполнения.</p></li></ol></div></section>
+<section class="r-section r-section-tint"><div class="container"><div class="r-section-heading"><div><p class="r-eyebrow">Полезное о ремонте</p><h2>Материалы и решения</h2></div><a class="r-text-link" href="{% url 'post_list' %}">Весь блог ↗</a></div><div class="r-projects">{% for post in free_latest_posts %}{% include 'blog/project_card.html' %}{% empty %}<p>Примеры и материалы о ремонте появятся здесь после публикации.</p>{% endfor %}</div></div></section>
+{% include 'project_cta.html' %}{% endblock %}

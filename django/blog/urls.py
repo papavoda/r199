@@ -3,6 +3,7 @@ from django.views.decorators.cache import cache_page
 from .views import *
 
 urlpatterns = [
+    path('uslugi/<slug:service_slug>/', ServiceView.as_view(), name='service_detail'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('comment/<int:pk>/', CreateComment.as_view(), name="create_comment"),
     path('', HomeView.as_view(), name='home'),

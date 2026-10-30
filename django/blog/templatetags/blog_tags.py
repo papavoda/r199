@@ -1,9 +1,14 @@
 from django import template
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from blog.models import Category, Post, Tag, Comment
 
 register = template.Library()
+
+
+@register.simple_tag(name='all_tags')
+def get_all_tag_links():
+    return Tag.objects.order_by('name')
 
 
 @register.simple_tag(name='get_cats')
@@ -30,7 +35,7 @@ def get_all_tags():
     <p>{{  last_posts.title }}</p>
     """
     # список тегов, в которых есть посты
-    return Tag.objects.annotate(posts_count=Count("post")).filter(posts_count__gt=0)
+    return Tag.objects.annotate(posts_count=Count("post", filter=Q(post__status='published'))).filter(posts_count__gt=0)
 
 
 # @register.inclusion_tag('blog/include/tags/tag_cats_list.html')
@@ -45,5 +50,5 @@ def get_all_tags():
 # @register.inclusion_tag('blog/post_detail.html')
 def get_not_empty_cats():
     # список категорий, в которых есть посты
-    return Category.objects.annotate(posts_count=Count("post")).filter(posts_count__gt=0)
+    return Category.objects.annotate(posts_count=Count("post", filter=Q(post__status='published'))).filter(posts_count__gt=0)
 

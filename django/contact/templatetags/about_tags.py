@@ -22,9 +22,9 @@ def get_about():
 @register.inclusion_tag('contact/include/tags/tag_about_intro.html')
 def get_promo():
     """Вывод promo about"""
-    intro_about = About.objects.all().first()
-    promo = PromoAbout.objects.all()
-    img_about = ImageAbout.objects.all()
+    intro_about = About.objects.last()
+    promo = intro_about.about_promo.all() if intro_about else PromoAbout.objects.none()
+    img_about = intro_about.about_images.all() if intro_about else ImageAbout.objects.none()
     return {
             # {{ intro_about }} имя в шаблоне
             "intro_about": intro_about,

@@ -6,3 +6,15 @@ cache
 media
 static
 
+# Credentials are injected by Compose at runtime, never sent as build inputs.
+.env
+.env.*
+.env-*
+*.env
+*.env.*
+*.env-*
+__pycache__
+*.pyc
+*.sqlite3
+*.log
+

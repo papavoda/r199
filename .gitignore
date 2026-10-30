@@ -1,12 +1,40 @@
-**/.idea
-*.pyc
-*cache
+# Local settings and credentials (examples below contain no secrets).
 *.env*
-*.directory
-**/.venv
-**/media
+!*.env.example
+!.env.example
+!.env.*.example
+!.env-*.example
+/r199_env/
 
-#**/migrations/*
-#!**/migrations/__init__.py
+# Python environments and generated checks.
+**/.venv/
+/venv/
+/env/
+/.audit-venv/
+/.upgrade-venv/
+/.audit/
 __pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*cache/
+
+# Runtime files and local backups. Migrations remain tracked.
+**/media/
+/r199_media/
 *.sql
+*.sql.gz
+*.dump
+*.sqlite3
+*.sqlite3-*
+*.log
+
+# Editors and OS metadata.
+**/.idea/
+.vscode/
+*.directory
+.DS_Store
+Thumbs.db

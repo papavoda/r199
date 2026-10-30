@@ -18,16 +18,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from .views import robots_txt
 from django.contrib.sitemaps.views import sitemap
 
-from blog.sitemap import PostSitemap, StaticSitemap
+from blog.sitemap import PostSitemap, StaticSitemap, ServiceSitemap
 sitemaps = {
     'posts': PostSitemap,
     'static': StaticSitemap,
+    'services': ServiceSitemap,
     }
 
 
 urlpatterns = [
+    path('robots.txt', robots_txt, name='robots'),
     path('admin/', admin.site.urls),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('', include('blog.urls')),

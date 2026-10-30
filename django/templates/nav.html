@@ -1,26 +1,2 @@
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
-
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="fa fa-bars"></span> Меню
-	      </button>
-            <form action="{% url 'search_result' %}" class="searchform order-lg-last">
-          <div class="form-group d-flex">
-            <input type="text" class="form-control pl-3" name='q' placeholder="Поиск">
-            <button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
-          </div>
-        </form>
-
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav mr-auto">
-                <li class="nav-item {% if nbar == 'home' %}active{% endif %}"><a href="{% url 'home' %}" class="nav-link">ГЛАВНАЯ</a></li>
-                <li class="nav-item {% if nbar == 'about' %}active{% endif %}"><a href="{% url 'about' %}" class="nav-link">О НАС</a></li>
-                <li class="nav-item"><a href="{% url 'favorites_list' %}" class="nav-link">РАБОТЫ</a></li>
-                <li class="nav-item"><a href="{% url 'price' %}" class="nav-link">ЦЕНЫ</a></li>
-                <li class="nav-item {% if nbar == 'blog' %}active{% endif %}"><a href="{% url 'post_list' %}" class="nav-link">БЛОГ</a></li>
-{#	            <li class="nav-item {% if nbar == 'calc' %}active{% endif %}"><a href="{% url 'calc' %}" class="nav-link">КАЛЬКУЛЯТОР</a></li>#}
-	            <li class="nav-item"><a href="https://remont199.com/calc/" class="nav-link">КАЛЬКУЛЯТОР</a></li>
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
+<nav class="r-nav" aria-label="Основная навигация"><div class="container r-nav-inner"><button class="r-menu-toggle" type="button" data-menu-toggle aria-controls="ftco-nav" aria-expanded="false">☰ Меню</button><div class="collapse r-nav-menu" id="ftco-nav"><ul>
+<li><a {% if nbar == 'home' %}aria-current="page"{% endif %} href="{% url 'home' %}">Главная</a></li><li><a {% if nbar == 'services' %}aria-current="page"{% endif %} href="{% url 'home' %}#services">Услуги</a></li><li><a {% if nbar == 'favorites' %}aria-current="page"{% endif %} href="{% url 'favorites_list' %}">Наши работы</a></li><li><a {% if nbar == 'price' %}aria-current="page"{% endif %} href="{% url 'price' %}">Цены</a></li><li><a {% if nbar == 'about' %}aria-current="page"{% endif %} href="{% url 'about' %}">О нас и контакты</a></li><li><a {% if nbar == 'blog' %}aria-current="page"{% endif %} href="{% url 'post_list' %}">Блог</a></li></ul></div><form class="r-search" action="{% url 'search_result' %}" role="search"><label class="sr-only" for="site-search">Поиск по сайту</label><input id="site-search" name="q" type="search" placeholder="Поиск по сайту" value="{{ request.GET.q }}"><button type="submit" aria-label="Найти"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></form></div></nav>

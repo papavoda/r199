@@ -1,115 +1,38 @@
 <!DOCTYPE html>
-<html lang="ru" prefix="og: https://ogp.me/ns#>
 {% load blog_tags about_tags static %}
-  <head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHCBR73MDM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-KHCBR73MDM');
-</script>
-
-    <title>{% block title %}{% endblock title %}</title>
-
-    <meta charset="utf-8">
-    <meta name="description" content="{% block description %}{% endblock %}">
-    <meta name="keywords" content="{% block keywords %}{% endblock %}">
-    <meta name="author" content="Aleksei Mashtakov">
-  {#https://sky.pro/media/razmeshhenie-izobrazheniya-dlya-predprosmotra-ssylki-v-whatsapp/#}
-  {% block add_to_head %}
-
-  {% endblock %}
-{#{% block add_to_head %}#}
-{#{% recaptcha_init %}#}
-{#  {% recaptcha_ready action_name='homepage' %}#}
-{#{% endblock %}#}
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{#  load extended js#}
-      <script type="text/javascript">{% block extendeed_js %}{% endblock %}</script>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
-{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">#}
-
-{#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">#}
-{#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@4.7.0/css/fontawesome.min.css">#}
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
-    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
-    <link rel="stylesheet" href="{% static 'css/nstyle.css' %}">
-    <link rel="icon" href="{% static 'favicon.ico'%}">
-  
-  </head>
-  <body>
-
-{#  LOAD INCLUSION TAGS FOR ALL PAGES#}
-{% tag_list as tags %}
-{% get_social_links as social %}
-{% not_empty_cats as categories %}
-{#  end LOAD INCLUDED TAGS FOR ALL PAGES#}
-    {% include 'logo.html' %}
-    <!-- BEGIN nav -->
-{% include 'nav.html' %}
-    <!-- END nav -->
-
-
-    {% block content %}
-
-
-    {% endblock %}
-
-
-{#  begin  footer#}
-{% include 'footer.html' %}
-{#end footer#}
-
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-
-  <script src="{% static 'js/jquery.min.js' %}"></script>
-  <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
-  <script src="{% static 'js/popper.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-  <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
-  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-  <script src="{% static 'js/scrollax.min.js' %}"></script>
-{#  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>#}
-{#  <script src="{% static 'js/google-map.js' %}"></script>#}
-  <script src="{% static 'js/main.js' %}"></script>
-
-  </body>
+<html lang="ru" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ seo_title }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ seo_description }}{% endblock %}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {% if seo_noindex %}<meta name="robots" content="noindex, follow">{% endif %}
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:site_name" content="remont199.com">
+  <meta property="og:title" content="{{ seo_title }}">
+  <meta property="og:description" content="{{ seo_description }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  {% if seo_image %}<meta property="og:image" content="{{ seo_image }}">{% endif %}
+  <meta name="theme-color" content="#2f6685">
+  <script type="application/ld+json">{{ business_jsonld|safe }}</script>
+  {% block add_to_head %}{% endblock %}
+  <script>{% block extendeed_js %}{% endblock %}</script>
+  <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+  <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+  <link rel="stylesheet" href="{% static 'css/nstyle.css' %}?v=20261030-type1">
+  <link rel="stylesheet" href="{% static 'css/site-redesign.css' %}?v=20261030-type1">
+</head>
+<body class="r-site">
+  <a class="r-skip" href="#main-content">Перейти к содержимому</a>
+  {% tag_list as tags %}{% get_social_links as social %}{% not_empty_cats as categories %}
+  {% include 'logo.html' %}{% include 'nav.html' %}
+  <main id="main-content">{% block content %}{% endblock %}</main>
+  {% include 'footer.html' %}
+  <script defer src="{% static 'js/site-ui.js' %}?v=20261030-1"></script>
+</body>
 </html>
-
-
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{##}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
-{#    <meta name="keywords" content="{% block keywords %} {% endblock %}"/>#}
-{#    <meta name="description" content="{% block description %} {% endblock %}"/>#}
-{#    <title>{% block title %}{% endblock title %}</title>#}
-{#</head>#}
-{#<body>#}
-{#{% block content %}{% endblock %}#}
-{##}
-{##}
-{#</body>#}
-{#</html>#}

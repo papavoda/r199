@@ -116,7 +116,7 @@
                 {% with post.get_absolute_url as post_url %}
                     <div class="col-md-4 d-flex ftco-animate">
                         <div class="blog-entry align-self-stretch" style="width: 100%;">
-                            <a href="{{ post_url }}" class="block-20 rounded" style="background-image: url('{{ post.main_image.url }}');">
+                            <a href="{{ post_url }}" class="block-20 rounded" {% if post.main_image %}style="background-image: url('{{ post.main_image.url }}');"{% endif %}>
                             </a>
                             <div class="text mt-3 text-center">
               	                <div class="meta mb-2">

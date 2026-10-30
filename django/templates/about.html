@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load about_tags cache%}
 {% load static%}
-{% block title %}{{ request.site.name }} - {{ main_title }}{% endblock title %}
+{% block title %}{{ seo_title }}{% endblock title %}
 {% block content %}
 {#{% cache 5000 about %}#}
 {% include 'hero_over_home.html' %}
@@ -9,7 +9,7 @@
 {% get_promo %}
 
 
-<section class="ftco-section">
+<section class="ftco-section" id="contact">
     	<div class="container">
     		<div class="row justify-content-center">
 					<div class="col-md-12">

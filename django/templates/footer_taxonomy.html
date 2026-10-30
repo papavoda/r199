@@ -1,0 +1,21 @@
+{% load blog_tags %}
+{% get_cats as footer_categories %}
+{% all_tags as footer_tags %}
+<div class="r-footer-taxonomy">
+  <section aria-labelledby="footer-categories-title">
+    <h2 id="footer-categories-title">Категории</h2>
+    <ul>
+      {% for category in footer_categories %}
+      <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+      {% empty %}<li>Категорий пока нет</li>{% endfor %}
+    </ul>
+  </section>
+  <section aria-labelledby="footer-tags-title">
+    <h2 id="footer-tags-title">Метки</h2>
+    <ul>
+      {% for tag in footer_tags %}
+      <li><a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a></li>
+      {% empty %}<li>Меток пока нет</li>{% endfor %}
+    </ul>
+  </section>
+</div>

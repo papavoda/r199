@@ -6,6 +6,7 @@ env = Env()
 env.read_env()
 
 SITE_ID = 1
+SITE_PUBLIC_URL = env.str('SITE_PUBLIC_URL', default='https://remont199.com')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -16,7 +17,7 @@ DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 #HSTS settings
-#SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS', cast=int)
+SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS', default=0)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool('SECURE_HSTS_INCLUDE_SUBDOMAINS', default=False)
 SECURE_HSTS_PRELOAD = env.bool('SECURE_HSTS_PRELOAD', default=False)
 #HTTPS settings
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'mptt',
     # https://proghunter.ru/articles/django-base-2023-adding-ckeditor-5-to-django-41
     'django_ckeditor_5',
-    'debug_toolbar',
     # 'snowpenguin.django.recaptcha3',
     'django_recaptcha',
     "phonenumber_field",
@@ -65,8 +65,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # for debug-toolbar
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
 
     # "django.contrib.staticfiles",
@@ -86,6 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'contact.context_processors.site_context',
             ],
         },
     },
@@ -140,14 +139,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# for debug-toolbar
-# for debug toolbar in docker
-# https://ranjanmp.medium.com/
-# django-debug-toolbar-not-showing-up-when-using-docker-django-docker-e79585813bc6
+# Debug Toolbar is available only in development.
 if DEBUG:
-    import socket
-    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1']
+    import debug_toolbar
+
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.insert(1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+    INTERNAL_IPS = env.list('INTERNAL_IPS', default=['127.0.0.1', '::1'])
+    if Path('/.dockerenv').is_file():
+        DEBUG_TOOLBAR_CONFIG = {
+            'SHOW_TOOLBAR_CALLBACK': 'debug_toolbar.middleware.show_toolbar_with_docker',
+        }
+    # Prefer assets shipped with the installed version over old collected copies.
+    STATICFILES_DIRS.insert(0, Path(debug_toolbar.__file__).resolve().parent / 'static')
 
 LOGIN_REDIRECT_URL = '/'
 

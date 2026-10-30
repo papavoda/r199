@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 # from . import models
 from .models import *
 from mptt.admin import MPTTModelAdmin
@@ -30,7 +30,9 @@ class ImageAdmin(admin.ModelAdmin):
     list_display = ("name", "image", 'get_image')
 
     def get_image(self, obj):
-        return mark_safe(f'<img src={obj.image.url} width="110" height="80"')
+        if not obj.image:
+            return 'Нет изображения'
+        return format_html('<img src="{}" width="110" height="80">', obj.image.url)
 
     get_image.short_description = "Миниатюра"
 
@@ -43,7 +45,9 @@ class ImageInline(admin.StackedInline):
     readonly_fields = ("get_image",)
 
     def get_image(self, obj):
-        return mark_safe(f'<img src={obj.image.url} width="110" height="80"')
+        if not obj.image:
+            return 'Нет изображения'
+        return format_html('<img src="{}" width="110" height="80">', obj.image.url)
 
 
 @admin.register(VideoYoutube)
@@ -69,7 +73,9 @@ class PostAdmin(admin.ModelAdmin):
     # prepopulated_fields = {'slug': ('title',)}  # new
 
     def get_image(self, obj):
-        return mark_safe(f'<img src={obj.main_image.url} width="110" height="80"')
+        if not obj.main_image:
+            return 'Нет изображения'
+        return format_html('<img src="{}" width="110" height="80">', obj.main_image.url)
 
 
 class CommentAdmin(admin.ModelAdmin):

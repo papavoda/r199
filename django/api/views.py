@@ -41,10 +41,7 @@ class PostListViewSet(viewsets.ModelViewSet):
     """
 
 class PricesForCalc(APIView):
-    prices = Price.objects.select_related('category').filter(use_in_calc=True)
-    serializer = PriceListSerializer(prices, many=True)
-
-    # Cache page for the requested url
-    # @method_decorator(cache_page(60 * 60 * 2))
     def get(self, request):
-        return Response(self.serializer.data)
+        prices = Price.objects.select_related('category').filter(use_in_calc=True)
+        serializer = PriceListSerializer(prices, many=True)
+        return Response(serializer.data)
